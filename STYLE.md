@@ -1,6 +1,8 @@
 ### General Coding Standards 
 
-Avoid `using` statements at all costs, preface all C++ standard libraries with the std:: qualifier.
+Avoid `using` statements at all costs, preface all C++ standard libraries with the `std::` qualifier.
+
+Make liberal use of the `const` keyword whenever possible–this will help avoid bugs later.
 
 ### File and Directory Conventions 
 
@@ -18,7 +20,7 @@ Test cases should go in test/.
 
 ### Naming Conventions 
 
-Preprocessor defintions should be capitalized as such: `A_PREPROCESSOR_DEFINITION`
+Preprocessor defintions should be in all-caps snake case: `A_PREPROCESSOR_DEFINITION`
 
 Compile-time options should be denoted by placing two underscores before the phrase, such as: `__WITH_SUCH_FEATURE`.
 
@@ -28,9 +30,9 @@ Variables within a class or struct declaration should be in `mixedCase`.
 
 Denote internal members with m_, such as `m_genericPointer`.
 
-Place a space after the opening parenthesis, before the closing parenthesis, and after the keyword. Additionally, braces should be placed on the following line. Example:
+Place a space after the opening parenthesis, before the closing parenthesis, and after the keyword. Additionally, braces should be placed on the following line. 
 
-```c++
+Example: ```c++
 if ( foo != std::nullptr )
 {
 

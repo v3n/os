@@ -32,7 +32,8 @@ Denote internal members with m_, such as `m_genericPointer`.
 
 Place a space after the opening parenthesis, before the closing parenthesis, and after the keyword. Additionally, braces should be placed on the following line. 
 
-Example: ```c++
+Example: 
+```c++
 if ( foo != std::nullptr )
 {
 

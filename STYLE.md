@@ -1,5 +1,9 @@
 ### General Coding Standards 
 
+Indent with spaces, tab length should be two spaces per tab.
+
+Try to avoid mixed line endings, have Git commit as LF.
+
 Avoid `using` statements at all costs, preface all C++ standard libraries with the `std::` qualifier.
 
 Make liberal use of the `const` keyword whenever possible–this will help avoid bugs later.

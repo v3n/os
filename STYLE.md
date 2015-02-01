@@ -1,8 +1,8 @@
-=== General Coding Standards ===
+### General Coding Standards 
 
 Avoid `using` statements at all costs, preface all C++ standard libraries with the std:: qualifier.
 
-=== File and Directory Conventions ===
+### File and Directory Conventions 
 
 File names should be in written in snake case, such as `multi_cpu_driver.cpp`.
 
@@ -16,7 +16,7 @@ External dependency source should be placed in external/ and output libraries sh
 
 Test cases should go in test/.
 
-=== Naming Conventions ===
+### Naming Conventions 
 
 Preprocessor defintions should be capitalized as such: `A_PREPROCESSOR_DEFINITION`
 

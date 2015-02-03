@@ -1,6 +1,6 @@
 language: cpp
 install: sudo apt-get install --force-yes make premake4
 compiler:
-	- clang
-	- gcc
+    - clang
+    - gcc
 script: premake4 gmake && make

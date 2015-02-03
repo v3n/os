@@ -19,16 +19,12 @@ before_install:
 install:
     - sudo apt-get install --force-yes make premake4
 
-# clang 3.4
-    - if [ "$CXX" == "clang++" ]; then sudo apt-get install --allow-unauthenticated -qq clang-3.4; fi
-    - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.4"; fi
-
 # gcc 4.8
     - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
     - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 # clang 3.4 libc++
-    - if [ "$CXX" == "clang++" ]; then sudo apt-get install --allow-unauthenticated -qq clang-3.4; fi
+    - if [ "$CXX" == "clang++" ]; then sudo apt-get install --allow-unauthenticated -qq clang-3.5; fi
     - if [ "$CXX" == "clang++" ]; then export CXXFLAGS="-std=c+11 -stdlib=libc++"; fi
     - if [ "$CXX" == "clang++" ]; then svn co --quiet http://llvm.org/svn/llvm-project/libcxx/trunk libcxx; fi
 
@@ -39,7 +35,7 @@ install:
     - if [ "$CXX" == "clang++" ]; then cd /usr/lib && sudo ln -sf libc++.so.1.0 libc++.so; fi
     - if [ "$CXX" == "clang++" ]; then sudo ln -sf libc++.so.1.0 libc++.so.1 && cd $cwd; fi
 
-    - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.4"; fi
+    - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.5"; fi
 
 before_script:
     - sudo apt-get update

@@ -10,6 +10,7 @@ solution "OS"
 
     configuration "gmake"
       buildoptions { "-std=c++11", "-stdlib=libc++" }
+      linkoptions { "-stdlib=libc++" }
 
     configurations { "Debug*" }
       defines { "DEBUG" }

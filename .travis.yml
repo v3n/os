@@ -1,6 +1,11 @@
 language: cpp
-install: sudo apt-get install --force-yes make premake4
+install: 
+    - sudo apt-get install --force-yes make premake4
+    - sudo add-apt-repository --yes ppa:codegear/release
+    - sudo apt-get update -qq
 compiler:
     - clang
     - gcc
-script: premake4 gmake && make
+script: 
+    - premake4 gmake
+    - make

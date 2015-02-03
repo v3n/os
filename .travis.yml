@@ -42,5 +42,8 @@ before_script:
     - sudo apt-get update
 
 script: 
+    - echo $CXX
+    - $CXX --version
     - premake4 gmake
+    - echo $CXX
     - make

@@ -1,7 +1,8 @@
 language: cpp
-install: 
+before_install:
     - sudo add-apt-repository --yes ppa:codegear/release
     - sudo apt-get update -qq
+install:
     - sudo apt-get install --force-yes make premake4
 compiler:
     - clang

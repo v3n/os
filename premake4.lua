@@ -8,6 +8,9 @@ solution "OS"
     includedirs { "include/" }
     flags { "ExtraWarnings" }
 
+    configuration "gmake"
+      buildoptions { "-std=c++11", "-stdlib=libc++" }
+
     configurations { "Debug*" }
       defines { "DEBUG" }
       flags { "Symbols" }

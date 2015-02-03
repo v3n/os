@@ -43,7 +43,5 @@ before_script:
 
 script: 
     - echo $CXX
-    - $CXX --version
     - premake4 gmake
-    - echo $CXX
-    - make
+    - verbose=1 make

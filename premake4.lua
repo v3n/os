@@ -9,7 +9,7 @@ solution "OS"
     flags { "ExtraWarnings" }
 
     configuration "gmake"
-      buildoptions { "-std=c++11", "-stdlib=libc++" }
+      buildoptions { "-std=c++11" }
       linkoptions { "-stdlib=libc++" }
 
     configurations { "Debug*" }

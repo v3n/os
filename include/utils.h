@@ -5,9 +5,14 @@
 
 #pragma once
 
+#include <cstdint>
+
 #ifdef DEBUG
   #include <cstdio>
   #define DLOG(format, ...) printf("[DEBUG] " + format, __VA_ARGS__);
 #else
   #define DLOG(...)
 #endif
+
+/* Base data type for word-addressable OS */
+typedef std::uint32_t WORD;

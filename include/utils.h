@@ -16,3 +16,8 @@
 
 /* Base data type for word-addressable OS */
 typedef std::uint32_t WORD;
+
+/* Register definitions */
+#define R_ACCUMULATOR -2
+#define R_ZERO -1
+#define R(cpu,x) ((word *)cpu+(word *)(x+2)) /* Access register of specific CPU */

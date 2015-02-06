@@ -20,8 +20,10 @@ solution "os"
   project "ostests"
     kind "ConsoleApp"
     language "C++"
-    files { "src/**.cpp" }
-    includedirs { "include/" }
+    files { "src/**.cpp", "test/**.cpp" }
+    excludes { "src/driver.cpp" }
+    includedirs { "include/", "lib/googletest/include" }
+    links { "gtest" }
     flags { "ExtraWarnings" }
 
     configuration "gmake"

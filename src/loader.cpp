@@ -1,5 +1,6 @@
 #include "loader.h"
 
+#include <cstring>
 
 Loader::Loader(Disk &diskName)
 {

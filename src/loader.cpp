@@ -67,7 +67,7 @@ std::vector<std::string> Loader::parseString_v(std::string &fullStr, std::string
 	std::string temp;
 	std::istringstream ss(fullStr);
 	while (std::getline(ss, temp)){
-		if (strstr(temp.c_str(), token.c_str())){
+		if (std::strstr(temp.c_str(), token.c_str())){
 			result.push_back(temp);
 		}
 	}

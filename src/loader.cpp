@@ -1,9 +1,46 @@
 #include "loader.h"
 
 
-Loader::Loader()
+Loader::Loader(Disk &diskName)
 {
+
+	std::string textFromFile = loadTextFile("..\\res\\Program-File.txt");
+	//this can be made more efficient by modifying parseString_v method in loader.cpp, having a switch statement inside the while loop to load two
+	//PCB(control cards) and instructions to a vector at the same time.
+	std::vector<std::string> v_JobsCC = parseString_v(textFromFile, "// J"); //job Control Card
+	std::vector<std::string> v_JobsDataCC = parseString_v(textFromFile, "// D");//job data Control Card
+	std::vector<std::string> v_Instructions = parseString_v(textFromFile, "0x");//instructions to be stored in Harddrive
+
+	std::vector<Loader::JobBlock> loadedJobBlock = loadJobBlock(v_JobsCC);
+	std::vector<Loader::JobDataBlock> loadedJobDataBlock = loadJobDataBlock(v_JobsDataCC);
+
+	//load into disk jb
+	Disk::JobBlock jb = diskName.getJobBlock();
+	std::vector<Disk::JobBlock> tempJBVector;
+	for (auto i : loadedJobBlock){
+		jb.id = i.id;
+		jb.priority = i.priority;
+		jb.wordSize = i.wordSize;
+		tempJBVector.push_back(jb);
+	}
+	diskName.setVectorJB(tempJBVector);
+
+	//load into disk jdb
+	Disk::JobDataBlock jdb = diskName.getJobDataBlock();
+	std::vector<Disk::JobDataBlock> tempJDBVector;
+	for (auto i : loadedJobDataBlock){
+		jdb.inputBufferSize = i.inputBufferSize;
+		jdb.outputBufferSize = i.outputBufferSize;
+		jdb.tempBufferSize = i.tempBufferSize;
+		tempJDBVector.push_back(jdb);
+	}
+	diskName.setVectorJDB(tempJDBVector);
+
+	//load into disk instructions
+	diskName.getVectorDataInstructions().clear();
+	diskName.setVectorDataInstruction(v_Instructions);
 }
+
 std::string Loader::loadTextFile(const std::string &fileName)
 {
 	std::ifstream file;
@@ -30,7 +67,7 @@ std::vector<std::string> Loader::parseString_v(std::string &fullStr, std::string
 	std::string temp;
 	std::istringstream ss(fullStr);
 	while (std::getline(ss, temp)){
-		if (std::strstr(temp.c_str(), token.c_str())){
+		if (strstr(temp.c_str(), token.c_str())){
 			result.push_back(temp);
 		}
 	}
@@ -51,7 +88,7 @@ std::vector<std::string> split(const std::string &s, char delim) {
 }
 std::vector<Loader::JobBlock> Loader::loadJobBlock(const std::vector<std::string> &str){
 	std::vector<Loader::JobBlock> result;
-	JobBlock jb;
+	Loader::JobBlock jb;
 	for (auto i : str){
 		std::vector<std::string> parsedJobStats = split(i, ' ');
 		unsigned long id = std::stoul(parsedJobStats[2],nullptr, 16);
@@ -61,13 +98,14 @@ std::vector<Loader::JobBlock> Loader::loadJobBlock(const std::vector<std::string
 		jb.id = id;
 		jb.priority = priority;
 		jb.wordSize = wordSize;
+
 		result.push_back(jb);
 	}	
 	return result;
 }
 std::vector<Loader::JobDataBlock> Loader::loadJobDataBlock(const std::vector<std::string> &str){
 	std::vector<Loader::JobDataBlock> result;
-	JobDataBlock jdb;
+	Loader::JobDataBlock jdb;
 	for (auto i : str){
 		std::vector<std::string> parsedJobStats = split(i, ' ');
 		unsigned long inputBufferSize = std::stoul(parsedJobStats[2], nullptr, 16);
@@ -80,8 +118,4 @@ std::vector<Loader::JobDataBlock> Loader::loadJobDataBlock(const std::vector<std
 		result.push_back(jdb);
 	}
 	return result;
-}
-
-Loader::~Loader()
-{
 }

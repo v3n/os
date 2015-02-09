@@ -4,9 +4,11 @@
 #include <algorithm>
 #include <cassert>
 
+#define m_digits std::string("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
 class BaseConverter{
 public:
-	std::string baseConvert(std::string const &num, int fromBase, int toBase){
+	static std::string baseConvert(std::string const &num, int fromBase, int toBase){
 		int numInput = 0;
 		if (num == "")
 		{
@@ -29,5 +31,5 @@ public:
 		return result;
 	}
 private:
-	std::string m_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	// std::string m_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 };

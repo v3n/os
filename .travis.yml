@@ -46,4 +46,4 @@ script:
     - $CXX --version
     - premake4 gmake
     - make -e
-    - ./bin/release/ostests_d
+    - if [ -e "./bin/release/ostests_d" ]; then ./bin/release/ostests_d; fi

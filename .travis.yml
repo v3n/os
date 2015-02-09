@@ -45,5 +45,5 @@ before_script:
 script: 
     - $CXX --version
     - premake4 gmake
-    - verbose=1 make -e
+    - make -e
     - ./bin/release/ostests_d

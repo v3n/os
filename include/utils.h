@@ -9,7 +9,7 @@
 
 #ifdef DEBUG
   #include <cstdio>
-  #define DLOG(format, ...) printf("[DEBUG] " format "\n", ##__VA_ARGS__);
+  #define DLOG(format, ...) printf("[DEBUG] " format "\n", ##__VA_ARGS__)
 #else
   #define DLOG(...)
 #endif

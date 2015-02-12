@@ -14,5 +14,10 @@ private:
 public:	
 	HDD();
 	~HDD();
+
+    /* Allocate zero'd file */
+    void * newFile(size_t);
+    /* Allocate new file and copy data to it */
+    void * newFile(void *, size_t);
 };
 

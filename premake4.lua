@@ -25,6 +25,7 @@ solution "os"
     includedirs   { "include/", "lib/googletest/include" }
     links         { "gtest" }
     flags         { "ExtraWarnings" }
+    defines       { "__FOR_TESTS=1" }
 
     configuration "gmake"
       buildoptions { "-std=c++11" }

@@ -1,6 +1,12 @@
-#include "AddressMgr.h"
+/******************************************************
+ * address_manager.cpp - ram address calculation
+ * created 140208 will owens ()
+ ******************************************************/
+
 #include <stdlib.h>
 #include <iostream>
+
+#include "address_manager.h"
 
 AddressMgr::AddressMgr()
 {	

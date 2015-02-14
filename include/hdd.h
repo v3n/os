@@ -3,9 +3,11 @@
  * created 140204 jonathan howard (j@hovverd.com)
  ******************************************************/
 
-#include "utils.h"
-
 #pragma once
+
+#include <cstdio>
+
+#include "utils.h"
 
 class HDD
 {

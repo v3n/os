@@ -5,7 +5,6 @@
 
 #include <new>
 
-#include "utils.h"
 #include "ram.h"
 
 #define BUFFER_SIZE (1024 * sizeof(WORD))

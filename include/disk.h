@@ -2,7 +2,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <cstdint>
+typedef uint32_t WORD;
 class Disk
 {
 public:
@@ -28,7 +29,7 @@ public:
 	inline std::vector<Disk::JobDataBlock> &getVectorJDB(){
 		return m_loadedJobDataBlock;
 	}
-	inline std::vector<std::string> &getVectorDataInstructions(){
+	inline std::vector<WORD> &getVectorDataInstructions(){
 		return m_dataInstructions;
 	}
 	inline void setVectorJB(std::vector<Disk::JobBlock> &vJB){
@@ -38,13 +39,19 @@ public:
 		m_loadedJobDataBlock = vJDB;
 	}
 	inline void setVectorDataInstruction(std::vector<std::string> &vInst){
-		m_dataInstructions = vInst;
+		std::string::size_type type;
+		WORD temp;
+		for (auto i:vInst){
+			char *p;
+			temp = std::strtoul(i.c_str(), &p, 16);
+			m_dataInstructions.push_back(temp);
+		}
 	}
+
 private:
-	std::vector<std::string> m_dataInstructions;
+	std::vector<WORD> m_dataInstructions;
 	std::vector<Disk::JobBlock> m_loadedJobBlock;
 	std::vector<Disk::JobDataBlock> m_loadedJobDataBlock;
 	JobBlock m_JobBlock;
 	JobDataBlock m_JobDataBlock;
 };
-

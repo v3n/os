@@ -10,9 +10,10 @@
 
 #ifdef R
 #undef R
+#endif
 /* Access register of this CPU */
 #define R(x) ((WORD *)this+(WORD *)x)
-#endif
+
 
 enum Instruction
 {

@@ -7,8 +7,8 @@
 
 HDD::HDD()
 {
-	/* use c-style memory allocation */
-	buffer = new WORD[1024];
+	/* use c++-style memory allocation */
+	buffer = new WORD[1024]();
 }
 
 HDD::~HDD()

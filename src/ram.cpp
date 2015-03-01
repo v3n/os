@@ -11,7 +11,7 @@
 
 RAM::RAM()
 {
-    buffer = new WORD[1024];
+    buffer = new WORD[1024]();
 
     allocatedPtr = buffer;
 }

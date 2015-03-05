@@ -1,22 +1,22 @@
 #include "scheduler.h"
 
-scheduler::scheduler()
+Scheduler::Scheduler()
 {
 	
 }
-scheduler::~scheduler()
+Scheduler::~Scheduler()
 {
 }
-void scheduler::Push(PCB next)
+void Scheduler::Push(PCB next)
 {
 	jobQueue.push_back(next);
 	SortQueue(jobQueue, 0, jobQueue.size() - 1);
 }
-PCB scheduler::Peek()
+PCB Scheduler::Peek()
 {
 	return jobQueue.back();
 }
-PCB scheduler::Pop()
+PCB Scheduler::Pop()
 {
 	PCB result = jobQueue.back();
 	jobQueue.erase(jobQueue.end());
@@ -24,14 +24,14 @@ PCB scheduler::Pop()
 	return result;
 }
 
-void scheduler::Swap(PCB x, PCB y)
+void Scheduler::Swap(PCB x, PCB y)
 {
 	PCB tmp = x;
 	x = y;
 	y = tmp;
 }
 
-void scheduler::SortQueue(std::vector<PCB> toSort, int left, int right)
+void Scheduler::SortQueue(std::vector<PCB> toSort, int left, int right)
 {		
 	int i = left;
 	int j = right;

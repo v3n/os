@@ -4,7 +4,7 @@
 #include "include\utils.h"
 #include "pcb.h"
 
-class scheduler
+class Scheduler
 {
 private:
 	std::vector<PCB> jobQueue;
@@ -15,7 +15,7 @@ public:
 	void Push(PCB next);
 	PCB Peek();
 	PCB Pop();
-	scheduler();
-	~scheduler();
+	Scheduler();
+	~Scheduler();
 };
 

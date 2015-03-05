@@ -14,12 +14,12 @@ void scheduler::Push(PCB next)
 }
 PCB scheduler::Peek()
 {
-	return jobQueue.front();
+	return jobQueue.back();
 }
 PCB scheduler::Pop()
 {
-	PCB result = jobQueue.front();
-	jobQueue.erase(jobQueue.begin());
+	PCB result = jobQueue.back();
+	jobQueue.erase(jobQueue.end());
 	SortQueue(jobQueue, 0, jobQueue.size() - 1);
 	return result;
 }

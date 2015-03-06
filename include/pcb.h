@@ -25,7 +25,7 @@ typedef struct MemoryState
 typedef struct Progeny
 {
 
-};
+} Progeny;
 
 typedef struct ProcessResources
 {

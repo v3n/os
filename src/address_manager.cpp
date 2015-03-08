@@ -12,6 +12,16 @@ AddressMgr::AddressMgr()
 {	
 }
 
+WORD AddressMgr::GetNextFree()
+{
+	WORD * free = buffer;
+	while (*free == NULL)
+	{
+		free++;
+	}
+	return free;
+}
+
 std::string AddressMgr::GetEffectiveAddress(std::string logAddHex, int baseReg)
 {
 	//Convert HEX address to DEC
@@ -25,9 +35,9 @@ std::string AddressMgr::GetEffectiveAddress(std::string logAddHex, int baseReg)
 	return result;
 }
 
-void AddressMgr::AllocateMemory(WORD diskStart, WORD memStart, int size, WORD *buffer, WORD *disk)
+void AddressMgr::AllocateMemory(WORD diskStart, int size, WORD *buffer, WORD *disk)
 {	
-	//Assumes word addressibility of RAM/Disk
+	//Assumes word addressibility of RAM/Disk		
 	if (memStart + size > 1024)
 	{
 		std::cout << "Insufficient RAM space to store process" << std::endl;

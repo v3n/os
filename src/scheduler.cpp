@@ -24,6 +24,15 @@ PCB Scheduler::Pop()
 	return result;
 }
 
+void Scheduler::LoadtoRAM(PCB toLoad)
+{
+	currentIndex = GetNextFree();
+	toLoad.memAddress = *currentIndex;
+	AllocateMemory(toLoad.diskAddress, toLoad.memAddress, toLoad.jobLength, RAM_buffer, HDD_buffer);	//stubbed arguments until PCB class is available
+	toLoad.endAddress = *currentIndex;
+	toLoad.currentState = JobState.WAITING;
+}
+
 void Scheduler::Swap(PCB x, PCB y)
 {
 	PCB tmp = x;
@@ -31,7 +40,7 @@ void Scheduler::Swap(PCB x, PCB y)
 	y = tmp;
 }
 
-void Scheduler::SortQueue(std::vector<PCB> toSort, int left, int right)
+void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)
 {		
 	int i = left;
 	int j = right;

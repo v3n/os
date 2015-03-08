@@ -12,7 +12,7 @@
 #undef R
 #endif
 /* Access register of this CPU */
-#define R(x) ((WORD *)this+(WORD *)x)
+#define R(x) ((WORD *)this + x)
 
 
 enum Instruction

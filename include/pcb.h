@@ -4,6 +4,55 @@
  ******************************************************/
 
 #include "utils.h"
+#include <iostream>
+#include <cstring.h>
+
+class PCB{
+
+public:
+	int burstTime; //time to finish a process execution
+	int processID; //unique identifier of a process
+	String state; //either 'waiting', 'ready', or 'running'
+
+public:
+	PCB()//Constructor to initialize PCB contents
+	{
+		state = "Ready";
+		burstTime = 5;
+	}
+
+	void addProcess(int PID)
+	{
+		cout << "Enter Burst Time ";
+		cin >> burstTime;
+		processID = PID;
+	}
+
+	void updateProcessBlock(string S)
+	{
+		state = S;
+	}
+
+	void executeProcess(int timeSlot)
+	{
+		cout << "Load the PCB of Process " << processID << endl;
+		state = "Running";
+
+		cout << "Process ID= " << processID << endl;
+		cout << "State " << state << endl;
+		cout << "Burstime " << burstTime << endl;
+
+		if ((burstTime - timeSlot) > 0)
+		{
+			cout << "Remaining Time to finish " << (burstTime - timeSlot) << endl;
+		}
+		else
+		{
+			state = "Done";
+			cout << "Process " << processID << " has finished and exited." << endl;
+		}
+	}
+}
 
 typedef struct CPUState
 {

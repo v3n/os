@@ -1,1 +1,1 @@
-.\bin\premake4.exe --file=.\premake4.lua vs2013
+.\bin\premake4.exe --file=.\premake4.lua vs2012

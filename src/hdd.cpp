@@ -25,7 +25,7 @@ HDD::~HDD()
 
 void * HDD::newFile(size_t size)
 {
-    // DLOG("[HDD] creating file with size %lu", size);
+    DLOG("[HDD] creating file with size %lu", size);
     // File * fs;
     // for (fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + (FILE_SIZE((*fs)) * sizeof(WORD)));
 

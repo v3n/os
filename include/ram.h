@@ -18,7 +18,7 @@ public:
     RAM();
     ~RAM();
 
-	static WORD * currentPtr;
+	WORD * currentPtr;
     void * malloc(std::size_t);
     void * calloc(std::size_t, std::size_t);
     void * realloc(void *, std::size_t);

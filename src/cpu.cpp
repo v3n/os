@@ -14,12 +14,6 @@
 /* Access register of this CPU */
 #define R(x) ((WORD *)this + x)
 
-
-enum Instruction
-{
-    
-};
-
 #define EXTRACT_TYPECODE(x) (0x003 << 30 & x) >> 30
 #define EXTRACT_OPCODE(x)   (0x06F << 24 & x) >> 24
 

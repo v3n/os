@@ -44,6 +44,18 @@ void * RAM::realloc(void * memory, std::size_t size)
     return this->malloc(size);
 }
 
+WORD RAM::EffectiveAddress(WORD logAddress, int baseRegister)
+{
+	return logAddress + baseRegister;
+
+	/*std::string logAddDec = BaseConverter::baseConvert(logAddHex, 16, 10);
+	WORD computedLogAdd = std::stoul(logAddDec);
+	WORD effAdd = computedLogAdd + baseReg;
+	std::string effAddStr = std::to_string(effAdd);
+	std::string result = BaseConverter::baseConvert(effAddStr, 10, 16);
+	return result;*/
+}
+
 void RAM::free(void * memory)
 {
 

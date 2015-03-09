@@ -3,7 +3,6 @@
 #include <vector>
 #include "utils.h"
 #include "pcb.h"
-#include "address_manager.h"
 #include "ram.h"
 
 class Scheduler
@@ -15,9 +14,9 @@ private:
 	void LoadToRAM(PCB toLoad);	
 
 public:
-	void Push(PCB next);
+	void Enqueue(PCB next);
 	PCB Peek();
-	PCB Pop();
+	PCB Dequeue();
 	Scheduler();
 	~Scheduler();
 };

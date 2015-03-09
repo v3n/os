@@ -11,8 +11,9 @@ class RAM
 {
 private:
     WORD * buffer;
-
     WORD * allocatedPtr;
+	WORD EffectiveAddress(WORD logAddress, int baseRegister);
+
 
 public: 
     RAM();

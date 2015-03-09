@@ -2,13 +2,12 @@
 
 #if 0
 Scheduler::Scheduler()
-{
-	
+{	
 }
 Scheduler::~Scheduler()
 {
 }
-void Scheduler::Push(PCB next)
+void Scheduler::Enqueue(PCB next)
 {
 	jobQueue.push_back(next);
 	SortQueue(jobQueue, 0, jobQueue.size() - 1);
@@ -17,7 +16,7 @@ PCB Scheduler::Peek()
 {
 	return jobQueue.back();
 }
-PCB Scheduler::Pop()
+PCB Scheduler::Dequeue()
 {
 	PCB result = jobQueue.back();
 	jobQueue.erase(jobQueue.end());
@@ -27,11 +26,17 @@ PCB Scheduler::Pop()
 
 void Scheduler::LoadtoRAM(PCB toLoad)
 {
-	currentIndex = GetNextFree();
-	toLoad.memAddress = *currentIndex;
-	AllocateMemory(toLoad.diskAddress, toLoad.memAddress, toLoad.jobLength, RAM_buffer, HDD_buffer);	//stubbed arguments until PCB class is available
-	toLoad.endAddress = *currentIndex;
-	toLoad.currentState = JobState.WAITING;
+	toLoad.startAddress = *allocatedPtr;
+	malloc(toLoad.programSize);
+	toLoad.endAddress = *allocatedPtr;
+	toLoad.state = ProcessStatus.PROCESS_NEW;
+
+	toLoad.inputBufferBegin = *++allocatedPtr;
+	malloc(toLoad.inputBufferSize);
+	toLoad.outputBufferBegin = *++allocatedPtr;
+	malloc(toLoad.outputBufferSize);
+
+	Enqueue(toLoad);
 }
 
 void Scheduler::Swap(PCB x, PCB y)

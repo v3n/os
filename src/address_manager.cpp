@@ -26,13 +26,11 @@ WORD * AddressMgr::GetNextFree()
 
 std::string AddressMgr::GetEffectiveAddress(std::string logAddHex, int baseReg)
 {
-	//Convert HEX address to DEC
+	
 	std::string logAddDec = BaseConverter::baseConvert(logAddHex, 16, 10);
-	WORD computedLogAdd = std::stoul(logAddDec);
-	//Compute Effective Address
+	WORD computedLogAdd = std::stoul(logAddDec);	
 	WORD effAdd = computedLogAdd + baseReg;
-	std::string effAddStr = std::to_string(effAdd);
-	//Convert from DEX to HEX and return
+	std::string effAddStr = std::to_string(effAdd);	
 	std::string result = BaseConverter::baseConvert(effAddStr, 10, 16);
 	return result;
 }

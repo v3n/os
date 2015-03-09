@@ -20,24 +20,33 @@ HDD::~HDD()
 	delete[] buffer;
 }
 
-void * HDD::newFile(unsigned int id, void * data, size_t size)
+
+void * const HDD::newFile(unsigned int id)
+{
+    File * fs;
+    for (fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + fs->size);
+
+    return fs;
+}
+
+void * const HDD::newFile(unsigned int id, void * data, size_t size)
 {
 #if DEBUG
     if (id == 0)
         throw std::invalid_argument("id must not equal 0");
 #endif
-    FileSystem * fs;
-    for (fs = (FileSystem *)buffer; fs->id == 0; fs += sizeof(FileSystem) + fs->size);
+    File * fs;
+    for (fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + fs->size);
     fs->id = id;
     fs->size = size;
-    std::memcpy(fs + sizeof(FileSystem), data, size);
+    std::memcpy(fs + sizeof(File), data, size);
 
     return fs;
 }
 
-FileSystem * HDD::findFile(unsigned int id)
+File * HDD::findFile(unsigned int id)
 {
-    for (FileSystem * fs = (FileSystem *)buffer; fs->id == 0; fs += sizeof(FileSystem) + fs->size)
+    for (File * fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + fs->size)
     {
         if (fs->id == id)
         {

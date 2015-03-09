@@ -9,15 +9,18 @@
 
 #include "utils.h"
 
- /* O(n) traversal */
- typedef struct FileSystem
- {
-     unsigned int id;
-     size_t size;
- } FileSystem;
- 
+/* O(n) traversal */
+typedef struct File
+{
+    unsigned int id;
+    size_t programSize;
+    unsigned int priority;
+    size_t inputBufferSize;
+    size_t outputBufferSize;
+    size_t tempBufferSize;
+} File;
 
-class HDD
+ class HDD
 {
 private:
 	WORD * buffer;
@@ -27,11 +30,11 @@ public:
 	~HDD();
 
     /* Allocate zero'd file */
-    void * newFile(size_t);
+    void * const newFile(size_t);
     /* Allocate new file and copy data to it */
-    void * newFile(unsigned int, void *, size_t);
+    void * const newFile(unsigned int, void *, size_t);
 
     /* return pointer to file */
-    FileSystem * findFile(unsigned int);
+    File * findFile(unsigned int);
 };
 

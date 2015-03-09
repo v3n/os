@@ -11,15 +11,16 @@ class RAM
 {
 private:
     WORD * buffer;
-
     WORD * allocatedPtr;
+	WORD EffectiveAddress(WORD logAddress, int baseRegister);
 
 public: 
     RAM();
     ~RAM();
 
-    void * malloc(size_t);
-    void * calloc(size_t, size_t);
-    void * realloc(void *, size_t);
+	static WORD * currentPtr;
+    void * malloc(std::size_t);
+    void * calloc(std::size_t, std::size_t);
+    void * realloc(void *, std::size_t);
     void free(void *);
 };

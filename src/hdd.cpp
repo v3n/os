@@ -8,6 +8,7 @@
 #include <stdexcept>
 
 #define BUFFER_SIZE (2048 * sizeof(WORD))
+#define FILE_SIZE(x) (x.programSize + x.inputBufferSize + x.outputBufferSize + x.tempBufferSize)
 
 HDD::HDD()
 {
@@ -20,24 +21,34 @@ HDD::~HDD()
 	delete[] buffer;
 }
 
-void * HDD::newFile(unsigned int id, void * data, size_t size)
+
+void * HDD::newFile(size_t size)
+{
+    DLOG("[HDD] creating file with size %lu", size);
+    File * fs;
+    for (fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + (FILE_SIZE((*fs)) * sizeof(WORD)));
+
+    return fs;
+}
+
+void * HDD::newFile(size_t id, void * data, size_t size)
 {
 #if DEBUG
     if (id == 0)
         throw std::invalid_argument("id must not equal 0");
 #endif
-    FileSystem * fs;
-    for (fs = (FileSystem *)buffer; fs->id == 0; fs += sizeof(FileSystem) + fs->size);
+    File * fs;
+    for (fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + (FILE_SIZE((*fs)) * sizeof(WORD)));
     fs->id = id;
-    fs->size = size;
-    std::memcpy(fs + sizeof(FileSystem), data, size);
+    fs->programSize = size;
+    std::memcpy(fs + sizeof(File), data, size);
 
     return fs;
 }
 
-FileSystem * HDD::findFile(unsigned int id)
+File * HDD::findFile(unsigned int id)
 {
-    for (FileSystem * fs = (FileSystem *)buffer; fs->id == 0; fs += sizeof(FileSystem) + fs->size)
+    for (File * fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + (FILE_SIZE((*fs)) * sizeof(WORD)))
     {
         if (fs->id == id)
         {

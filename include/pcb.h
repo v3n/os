@@ -5,14 +5,15 @@
 
 #include "utils.h"
 #include <iostream>
-#include <cstring.h>
+#include <cstring>
 
+#if 0
 class PCB{
 
 public:
 	int burstTime; //time to finish a process execution
 	int processID; //unique identifier of a process
-	String state; //either 'waiting', 'ready', or 'running'
+	//String state; //either 'waiting', 'ready', or 'running'
 
 public:
 	PCB()//Constructor to initialize PCB contents
@@ -23,7 +24,7 @@ public:
 
 	void addProcess(int PID)
 	{
-		cout << "Enter Burst Time ";
+		std::cout << "Enter Burst Time ";
 		cin >> burstTime;
 		processID = PID;
 	}
@@ -35,24 +36,25 @@ public:
 
 	void executeProcess(int timeSlot)
 	{
-		cout << "Load the PCB of Process " << processID << endl;
+		std::cout << "Load the PCB of Process " << processID << endl;
 		state = "Running";
 
-		cout << "Process ID= " << processID << endl;
-		cout << "State " << state << endl;
-		cout << "Burstime " << burstTime << endl;
+		std::cout << "Process ID= " << processID << endl;
+		std::cout << "State " << state << endl;
+		std::cout << "Burstime " << burstTime << endl;
 
 		if ((burstTime - timeSlot) > 0)
 		{
-			cout << "Remaining Time to finish " << (burstTime - timeSlot) << endl;
+			std::cout << "Remaining Time to finish " << (burstTime - timeSlot) << endl;
 		}
 		else
 		{
 			state = "Done";
-			cout << "Process " << processID << " has finished and exited." << endl;
+			std::cout << "Process " << processID << " has finished and exited." << endl;
 		}
 	}
 }
+#endif
 
 typedef struct CPUState
 {
@@ -85,11 +87,18 @@ enum ProcessStatus
 {
     PROCESS_RUNNING     = 0,
     PROCESS_READY       = 1,
-    PROCESS_BLOCKED     = 2,
-    PROCESS_NEW         = 3
+    PROCESS_WAITING     = 2,
+    PROCESS_NEW         = 3,
+	PROCESS_FINISHED	= 4
 };
 
 typedef struct PCB
 {
+	ProcessStatus state;
+	int jobPriority, jobID;
+	int inputBufferSize, outputBufferSize;
+	WORD startAddress, endAddress;
+	WORD inputBufferBegin, outputBufferBegin;
+	int programSize;
 
 } PCB;

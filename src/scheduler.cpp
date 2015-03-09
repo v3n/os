@@ -1,13 +1,13 @@
 #include "scheduler.h"
 
+//#if 0
 Scheduler::Scheduler()
-{
-	
+{	
 }
 Scheduler::~Scheduler()
 {
 }
-void Scheduler::Push(PCB next)
+void Scheduler::Enqueue(PCB next)
 {
 	jobQueue.push_back(next);
 	SortQueue(jobQueue, 0, jobQueue.size() - 1);
@@ -16,7 +16,7 @@ PCB Scheduler::Peek()
 {
 	return jobQueue.back();
 }
-PCB Scheduler::Pop()
+PCB Scheduler::Dequeue()
 {
 	PCB result = jobQueue.back();
 	jobQueue.erase(jobQueue.end());
@@ -24,13 +24,19 @@ PCB Scheduler::Pop()
 	return result;
 }
 
-void Scheduler::LoadtoRAM(PCB toLoad)
+void Scheduler::LoadToRAM(PCB toLoad)
 {
-	currentIndex = GetNextFree();
-	toLoad.memAddress = *currentIndex;
-	AllocateMemory(toLoad.diskAddress, toLoad.memAddress, toLoad.jobLength, RAM_buffer, HDD_buffer);	//stubbed arguments until PCB class is available
-	toLoad.endAddress = *currentIndex;
-	toLoad.currentState = JobState.WAITING;
+	toLoad.startAddress = *RAM::currentPtr;
+	malloc(toLoad.programSize);
+	toLoad.endAddress = *RAM::currentPtr;
+	toLoad.state = PROCESS_NEW;
+
+	toLoad.inputBufferBegin = *++RAM::currentPtr;
+	malloc(toLoad.inputBufferSize);
+	toLoad.outputBufferBegin = *++RAM::currentPtr;
+	malloc(toLoad.outputBufferSize);
+
+	Enqueue(toLoad);
 }
 
 void Scheduler::Swap(PCB x, PCB y)
@@ -48,11 +54,11 @@ void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)
 
 	while (i <= j)
 	{
-		while (toSort[i].priority < toSort[pivot].priority)
+		while (toSort[i].jobPriority < toSort[pivot].jobPriority)
 		{
 			i++;
 		}
-		while (toSort[j].priority > toSort[pivot].priority)
+		while (toSort[j].jobPriority > toSort[pivot].jobPriority)
 		{
 			j--;
 		}
@@ -72,5 +78,5 @@ void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)
 		SortQueue(toSort, i, right);
 	}
 }
-
+//#endif
 

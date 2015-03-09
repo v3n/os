@@ -26,7 +26,7 @@ void * RAM::malloc(size_t size)
     void * ReturnPtr = allocatedPtr;
     allocatedPtr += size * sizeof(WORD);
 
-    DLOG("[RAM] allocating %i words at address %p", size, ReturnPtr - buffer);
+    DLOG("[RAM] allocating %lu words at address %p", size, (void*)((WORD *)ReturnPtr - (WORD *)buffer));
 
     if ( allocatedPtr > (buffer + BUFFER_SIZE) )
         throw std::bad_alloc();

@@ -30,9 +30,9 @@ public:
 	~HDD();
 
     /* Allocate zero'd file */
-    void * const newFile(size_t);
+    void * newFile(size_t);
     /* Allocate new file and copy data to it */
-    void * const newFile(unsigned int, void *, size_t);
+    void * newFile(size_t, void *, size_t);
 
     /* return pointer to file */
     File * findFile(unsigned int);

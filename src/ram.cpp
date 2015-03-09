@@ -21,7 +21,7 @@ RAM::~RAM()
     delete[] buffer;
 }
 
-void * RAM::malloc(size_t size)
+void * RAM::malloc(std::size_t size)
 {
     void * ReturnPtr = allocatedPtr;
     allocatedPtr += size * sizeof(WORD);
@@ -33,12 +33,12 @@ void * RAM::malloc(size_t size)
     return ReturnPtr;
 }
 
-void * RAM::calloc(size_t number, size_t size)
+void * RAM::calloc(std::size_t number, std::size_t size)
 {
     return this->malloc(number * size * sizeof(WORD));
 }
 
-void * RAM::realloc(void * memory, size_t size)
+void * RAM::realloc(void * memory, std::size_t size)
 {
     this->free(memory);
     return this->malloc(size);

@@ -18,8 +18,8 @@ public:
     RAM();
     ~RAM();
 
-    void * malloc(size_t);
-    void * calloc(size_t, size_t);
-    void * realloc(void *, size_t);
+    void * malloc(std::size_t);
+    void * calloc(std::size_t, std::size_t);
+    void * realloc(void *, std::size_t);
     void free(void *);
 };

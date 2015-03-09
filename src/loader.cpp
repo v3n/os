@@ -34,7 +34,7 @@ Loader::Loader(std::ifstream ifs, HDD * hdd)
 					);
 
 				/* Temporarily cache opcodes, since we don't know size of file yet */
-				for (size_t i = 0; i < file.programSize; i++)
+				for (std::size_t i = 0; i < file.programSize; i++)
 				{
 					std::getline(ifs, line);
 					program.push_back((WORD)stoul(line));
@@ -54,7 +54,7 @@ Loader::Loader(std::ifstream ifs, HDD * hdd)
 								file.outputBufferSize,
 								file.tempBufferSize
 							);
-						size_t dataSize = file.inputBufferSize + file.outputBufferSize + file.tempBufferSize;
+						std::size_t dataSize = file.inputBufferSize + file.outputBufferSize + file.tempBufferSize;
 
 						/* We can now allocate a file */
 						File * pFile = (File *)hdd->newFile(sizeof(File) + (file.programSize + dataSize) * sizeof(WORD));
@@ -65,7 +65,7 @@ Loader::Loader(std::ifstream ifs, HDD * hdd)
 
 						WORD * currentWord = (WORD *)pFile + sizeof(File) + (program.size() * sizeof(WORD));
 						/* parse and copy data */
-						for (size_t i = 0; i < (dataSize); i++)
+						for (std::size_t i = 0; i < (dataSize); i++)
 						{
 							std::getline(ifs, line);
 							*currentWord = (WORD)stoul(line);
@@ -90,7 +90,7 @@ Loader::Loader(std::ifstream ifs, HDD * hdd)
 				/* end of this program block */
 				if ( std::regex_match(line, end_regex) )
 					continue;
-				for ( size_t i = 0; i < header_match.size(); i++ )
+				for ( std::size_t i = 0; i < header_match.size(); i++ )
 					DLOG("[ERROR] while parsing header with match %lu and chunk %s", i + 1, header_match[i].str().c_str());
 			}
 		}	

@@ -1,21 +1,34 @@
+/******************************************************
+ * scheduler.cpp - long term scheduler
+ * created 150305 will owens ()
+ ******************************************************/
+
+#include <map>
+
+#include "utils.h"
 #include "scheduler.h"
 
-//#if 0
 Scheduler::Scheduler()
-{	
+{
+
 }
+
 Scheduler::~Scheduler()
 {
+
 }
+
 void Scheduler::Enqueue(PCB next)
 {
 	jobQueue.push_back(next);
 	SortQueue(jobQueue, 0, jobQueue.size() - 1);
 }
+
 PCB Scheduler::Peek()
 {
 	return jobQueue.back();
 }
+
 PCB Scheduler::Dequeue()
 {
 	PCB result = jobQueue.back();
@@ -78,5 +91,3 @@ void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)
 		SortQueue(toSort, i, right);
 	}
 }
-//#endif
-

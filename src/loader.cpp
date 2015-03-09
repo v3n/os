@@ -18,6 +18,12 @@ Loader::Loader(std::string file, HDD * hdd)
 	std::smatch header_match;
 	std::regex end_regex("// ?END");
 
+	if ( !ifs.good() || !ifs.is_open() )
+	{
+		DLOG("Problem with file stream, aborting load.");
+		return;
+	}
+
 	for ( ; std::getline(ifs, line) ; )
 	{
 		if ( std::regex_search(line, header_match, header_regex) )
@@ -116,5 +122,8 @@ Loader::Loader(std::string file, HDD * hdd)
 			// for ( ; std::regex_search(line, end_regex) ; std::getline(ifs, line) );
 		}
 	}
+
+	ifs.close();
+
 	DLOG("Finished parsing program file.");
 }

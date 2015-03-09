@@ -5,6 +5,7 @@
 
 #include "hdd.h"
 #include <cstring>
+#include <cstdlib>
 #include <stdexcept>
 
 #define BUFFER_SIZE (2048 * sizeof(WORD))
@@ -24,11 +25,12 @@ HDD::~HDD()
 
 void * HDD::newFile(size_t size)
 {
-    DLOG("[HDD] creating file with size %lu", size);
-    File * fs;
-    for (fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + (FILE_SIZE((*fs)) * sizeof(WORD)));
+    // DLOG("[HDD] creating file with size %lu", size);
+    // File * fs;
+    // for (fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + (FILE_SIZE((*fs)) * sizeof(WORD)));
 
-    return fs;
+    // return fs;
+    return std::malloc(size);
 }
 
 void * HDD::newFile(size_t id, void * data, size_t size)

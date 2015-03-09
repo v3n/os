@@ -1,5 +1,6 @@
 #include "scheduler.h"
 
+#if 0
 Scheduler::Scheduler()
 {
 	
@@ -72,5 +73,5 @@ void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)
 		SortQueue(toSort, i, right);
 	}
 }
-
+#endif
 

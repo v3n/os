@@ -12,14 +12,16 @@ AddressMgr::AddressMgr()
 {	
 }
 
-WORD AddressMgr::GetNextFree()
+WORD * AddressMgr::GetNextFree()
 {
+	#if 0
 	WORD * free = buffer;
 	while (*free == NULL)
 	{
 		free++;
 	}
 	return free;
+	#endif
 }
 
 std::string AddressMgr::GetEffectiveAddress(std::string logAddHex, int baseReg)
@@ -34,7 +36,7 @@ std::string AddressMgr::GetEffectiveAddress(std::string logAddHex, int baseReg)
 	std::string result = BaseConverter::baseConvert(effAddStr, 10, 16);
 	return result;
 }
-
+#if 0
 void AddressMgr::AllocateMemory(WORD diskStart, int size, WORD *buffer, WORD *disk)
 {	
 	//Assumes word addressibility of RAM/Disk		
@@ -64,7 +66,7 @@ void AddressMgr::AllocateMemory(WORD diskStart, int size, WORD *buffer, WORD *di
 //	}
 //}
 
-
+#endif
 AddressMgr::~AddressMgr()
 {
 }

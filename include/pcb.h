@@ -5,8 +5,9 @@
 
 #include "utils.h"
 #include <iostream>
-#include <cstring.h>
+#include <cstring>
 
+#if 0
 class PCB{
 
 public:
@@ -23,7 +24,7 @@ public:
 
 	void addProcess(int PID)
 	{
-		cout << "Enter Burst Time ";
+		std::cout << "Enter Burst Time ";
 		cin >> burstTime;
 		processID = PID;
 	}
@@ -35,24 +36,25 @@ public:
 
 	void executeProcess(int timeSlot)
 	{
-		cout << "Load the PCB of Process " << processID << endl;
+		std::cout << "Load the PCB of Process " << processID << endl;
 		state = "Running";
 
-		cout << "Process ID= " << processID << endl;
-		cout << "State " << state << endl;
-		cout << "Burstime " << burstTime << endl;
+		std::cout << "Process ID= " << processID << endl;
+		std::cout << "State " << state << endl;
+		std::cout << "Burstime " << burstTime << endl;
 
 		if ((burstTime - timeSlot) > 0)
 		{
-			cout << "Remaining Time to finish " << (burstTime - timeSlot) << endl;
+			std::cout << "Remaining Time to finish " << (burstTime - timeSlot) << endl;
 		}
 		else
 		{
 			state = "Done";
-			cout << "Process " << processID << " has finished and exited." << endl;
+			std::cout << "Process " << processID << " has finished and exited." << endl;
 		}
 	}
 }
+#endif
 
 typedef struct CPUState
 {

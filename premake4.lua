@@ -17,20 +17,6 @@ solution "os"
     objdir        "build/obj_release"
     targetdir     "bin/release"
 
-  project "ostests"
-    kind          "ConsoleApp"
-    language      "C++"
-    files         { "src/**.cpp", "test/**.cpp" }
-    excludes      { "src/driver.cpp" }
-    includedirs   { "include/", "lib/googletest/include" }
-    links         { "gtest" }
-    flags         { "ExtraWarnings" }
-    defines       { "__FOR_TESTS=1" }
-
-    configuration "gmake"
-      buildoptions { "-std=c++11" }
-      linkoptions { "-stdlib=libc++" }
-
   -- The google test static lib
   project "gtest"
      kind        "StaticLib"     
@@ -45,6 +31,20 @@ solution "os"
   
      configuration "Release"
         flags    { "Optimize" } 
+
+  project "ostests"
+    kind          "ConsoleApp"
+    language      "C++"
+    files         { "src/**.cpp", "test/**.cpp" }
+    excludes      { "src/driver.cpp" }
+    includedirs   { "include/", "lib/googletest/include" }
+    links         { "gtest" }
+    flags         { "ExtraWarnings" }
+    defines       { "__FOR_TESTS=1" }
+
+    configuration "gmake"
+      buildoptions { "-std=c++11" }
+      linkoptions { "-stdlib=libc++" }
 
   project "os"
     kind          "ConsoleApp"

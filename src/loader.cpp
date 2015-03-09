@@ -1,22 +1,26 @@
 #include <regex>
 #include <string>
 #include <cstring>
+#include <iostream>
 
 #include "loader.h"
 #include "hdd.h"
 
-Loader::Loader(std::ifstream ifs, HDD * hdd)
+Loader::Loader(std::string file, HDD * hdd)
 {
 	DLOG("Parsing program file.");
+	std::ifstream ifs;
+	ifs.open(file);
+
 	std::string line;
 
 	std::regex header_regex("// [A-z]+ ([A-Fa-f0-9]+) ([A-Fa-f0-9]+) ([[A-Fa-f0-9]+)");
 	std::smatch header_match;
-	std::regex end_regex("// END");
+	std::regex end_regex("// ?END");
 
-	for ( std::getline(ifs, line); ifs.eof(); std::getline(ifs, line) )
+	for ( ; std::getline(ifs, line) ; )
 	{
-		if ( std::regex_match(line, header_match, header_regex) )
+		if ( std::regex_search(line, header_match, header_regex) )
 		{
 			File file;
 			std::vector<WORD> program;
@@ -37,11 +41,12 @@ Loader::Loader(std::ifstream ifs, HDD * hdd)
 				for (std::size_t i = 0; i < file.programSize; i++)
 				{
 					std::getline(ifs, line);
-					program.push_back((WORD)stoul(line));
+					program.push_back((WORD)stoul(line, 0, 16));
 				}
 
+				std::getline(ifs, line);
 				/* Match against data header */
-				if ( std::regex_match(line, header_match, header_regex) )
+				if ( std::regex_search(line, header_match, header_regex) )
 				{
 					if (header_match.size() == 4)
 					{
@@ -68,18 +73,21 @@ Loader::Loader(std::ifstream ifs, HDD * hdd)
 						for (std::size_t i = 0; i < (dataSize); i++)
 						{
 							std::getline(ifs, line);
-							*currentWord = (WORD)stoul(line);
+							*currentWord = (WORD)std::stoul(line, 0, 16);
+							currentWord++;
 						}
 
 					}
 					else 
 					{
 						/* Corrupted data header, let's abort */
+						DLOG("invalid data header");
 						continue;
 					}
 				}
 				else
 				{
+					DLOG("match failed");
 					/* This should never happen, abort this program and move on */
 					continue;
 				}
@@ -87,16 +95,25 @@ Loader::Loader(std::ifstream ifs, HDD * hdd)
 			}
 			else
 			{
+				std::cout << line << std::endl;
 				/* end of this program block */
-				if ( std::regex_match(line, end_regex) )
+				if ( std::regex_search(line, end_regex) )
+				{
+					std::getline(ifs, line);
 					continue;
+				}
 				for ( std::size_t i = 0; i < header_match.size(); i++ )
 					DLOG("[ERROR] while parsing header with match %lu and chunk %s", i + 1, header_match[i].str().c_str());
 			}
 		}	
 		else
 		{
+			if ( std::regex_search(line, end_regex) )
+			{
+				continue;
+			}
 			DLOG("[ERROR] while parsing program header, searching to // END and retrying.");
+			// for ( ; std::regex_search(line, end_regex) ; std::getline(ifs, line) );
 		}
 	}
 	DLOG("Finished parsing program file.");

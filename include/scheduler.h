@@ -8,6 +8,7 @@
 class Scheduler
 {
 private:
+	RAM buffer;
 	std::vector<PCB> jobQueue;
 	void Swap(PCB x, PCB y);
 	void SortQueue(std::vector<PCB> &toSort, int left, int right);	

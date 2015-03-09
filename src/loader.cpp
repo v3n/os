@@ -1,5 +1,6 @@
 #include <regex>
 #include <string>
+#include <cstring>
 
 #include "loader.h"
 #include "hdd.h"
@@ -58,9 +59,9 @@ Loader::Loader(std::ifstream ifs, HDD * hdd)
 						/* We can now allocate a file */
 						File * pFile = (File *)hdd->newFile(sizeof(File) + (file.programSize + dataSize) * sizeof(WORD));
 						/* copy file header */
-						memcpy(pFile, &file, sizeof(File));
+						std::memcpy(pFile, &file, sizeof(File));
 						/* copy program opcodes */
-						memcpy(pFile + sizeof(File), program.data(), program.size() * sizeof(WORD));
+						std::memcpy(pFile + sizeof(File), program.data(), program.size() * sizeof(WORD));
 
 						WORD * currentWord = (WORD *)pFile + sizeof(File) + (program.size() * sizeof(WORD));
 						/* parse and copy data */

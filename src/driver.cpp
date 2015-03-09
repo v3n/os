@@ -1,24 +1,15 @@
 #include <iostream>
+#include <fstream>
+
 #include "loader.h"
+#include "hdd.h"
 
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	//data can be retrieved from mainDisk through its methods 
-	//since the size of the disk is wrong on the instructions, just filling it up and disregarding 
-	//its size
-	// Disk mainDisk;
-	// Loader loader(mainDisk);
-
-    int ProgramID;
-
-	for ( ; ; )
-	{
-        cout << "Program to run:" << endl;
-        cin >> ProgramID;
-
-        
-	}
+    HDD *hdd = new HDD();
+    Loader *l = new Loader("/Users/jonathan/Development/os/spec/Program-File.txt", hdd);
+    
 	return 0;
 }

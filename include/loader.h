@@ -8,5 +8,5 @@
 class Loader
 {
 public:
-	Loader(std::ifstream, HDD *);
+	Loader(std::string, HDD *);
 };

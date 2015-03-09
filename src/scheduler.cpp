@@ -1,6 +1,6 @@
 #include "scheduler.h"
 
-#if 0
+//#if 0
 Scheduler::Scheduler()
 {	
 }
@@ -24,16 +24,16 @@ PCB Scheduler::Dequeue()
 	return result;
 }
 
-void Scheduler::LoadtoRAM(PCB toLoad)
+void Scheduler::LoadToRAM(PCB toLoad)
 {
-	toLoad.startAddress = *allocatedPtr;
+	toLoad.startAddress = *RAM::currentPtr;
 	malloc(toLoad.programSize);
-	toLoad.endAddress = *allocatedPtr;
-	toLoad.state = ProcessStatus.PROCESS_NEW;
+	toLoad.endAddress = *RAM::currentPtr;
+	toLoad.state = PROCESS_NEW;
 
-	toLoad.inputBufferBegin = *++allocatedPtr;
+	toLoad.inputBufferBegin = *++RAM::currentPtr;
 	malloc(toLoad.inputBufferSize);
-	toLoad.outputBufferBegin = *++allocatedPtr;
+	toLoad.outputBufferBegin = *++RAM::currentPtr;
 	malloc(toLoad.outputBufferSize);
 
 	Enqueue(toLoad);
@@ -54,11 +54,11 @@ void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)
 
 	while (i <= j)
 	{
-		while (toSort[i].priority < toSort[pivot].priority)
+		while (toSort[i].jobPriority < toSort[pivot].jobPriority)
 		{
 			i++;
 		}
-		while (toSort[j].priority > toSort[pivot].priority)
+		while (toSort[j].jobPriority > toSort[pivot].jobPriority)
 		{
 			j--;
 		}
@@ -78,5 +78,5 @@ void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)
 		SortQueue(toSort, i, right);
 	}
 }
-#endif
+//#endif
 

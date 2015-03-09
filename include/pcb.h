@@ -13,7 +13,7 @@ class PCB{
 public:
 	int burstTime; //time to finish a process execution
 	int processID; //unique identifier of a process
-	String state; //either 'waiting', 'ready', or 'running'
+	//String state; //either 'waiting', 'ready', or 'running'
 
 public:
 	PCB()//Constructor to initialize PCB contents
@@ -87,11 +87,18 @@ enum ProcessStatus
 {
     PROCESS_RUNNING     = 0,
     PROCESS_READY       = 1,
-    PROCESS_BLOCKED     = 2,
-    PROCESS_NEW         = 3
+    PROCESS_WAITING     = 2,
+    PROCESS_NEW         = 3,
+	PROCESS_FINISHED	= 4
 };
 
 typedef struct PCB
 {
+	ProcessStatus state;
+	int jobPriority, jobID;
+	int inputBufferSize, outputBufferSize;
+	WORD startAddress, endAddress;
+	WORD inputBufferBegin, outputBufferBegin;
+	int programSize;
 
 } PCB;

@@ -25,16 +25,16 @@ PCB Scheduler::Dequeue()
 }
 
 void Scheduler::LoadToRAM(PCB toLoad)
-{
-	toLoad.startAddress = *RAM::currentPtr;
+{	
+	/*toLoad.startAddress = *RAM::currentPtr;
 	malloc(toLoad.programSize);
 	toLoad.endAddress = *RAM::currentPtr;
 	toLoad.state = PROCESS_NEW;
 
-	toLoad.inputBufferBegin = *++RAM::currentPtr;
+	toLoad.inputBufferBegin = *(RAM::currentPtr + sizeof(WORD));
 	malloc(toLoad.inputBufferSize);
-	toLoad.outputBufferBegin = *++RAM::currentPtr;
-	malloc(toLoad.outputBufferSize);
+	toLoad.outputBufferBegin = *(RAM::currentPtr + sizeof(WORD));
+	malloc(toLoad.outputBufferSize);*/
 
 	Enqueue(toLoad);
 }

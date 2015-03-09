@@ -3,6 +3,52 @@
  * created 140211 jonathan howard (j@hovverd.com)
  ******************************************************/
 
+#pragma once
+
+typedef struct INSTR_Arithmatic
+{
+    uint32_t filter:2;
+    uint32_t opcode:6;
+    uint32_t s_reg_a:4;
+    uint32_t s_reg_b:4;
+    uint32_t d_reg:4;
+    uint32_t padding:12;
+} INSTR_Arithmatic;
+
+typedef struct INSTR_Register
+{
+    uint32_t filter:2;
+    uint32_t opcode:6;
+    uint32_t reg_a:4;
+    uint32_t reg_b:4;
+    uint32_t address:16;
+} INSTR_Register;
+
+typedef struct INSTR_Immediate
+{
+    uint32_t filter:2;
+    uint32_t opcode:6;
+    uint32_t b_reg:4;
+    uint32_t d_reg:4;
+    uint32_t padding:16;
+} INSTR_Immediate;
+
+typedef struct INSTR_Flow
+{
+    uint32_t filter:2;
+    uint32_t opcode:6;
+    uint32_t address:24;
+} INSTR_Flow;
+
+typedef struct INSTR_Branch
+{
+    uint32_t filter:2;
+    uint32_t opcode:6;
+    uint32_t b_reg_a:4;
+    uint32_t d_reg:4;
+    uint32_t padding:16;
+} INSTR_Branch;
+
 #define stringify(s) #s
 
 /* Accumulator    */

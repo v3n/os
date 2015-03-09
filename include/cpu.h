@@ -1,6 +1,6 @@
 /******************************************************
  * cpu.h - cpu class header
- * created 140202 jonathan howard (j@hovverd.com)
+ * created 150202 jonathan howard (j@hovverd.com)
  ******************************************************/
 
 #include "utils.h"

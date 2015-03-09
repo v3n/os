@@ -1,6 +1,6 @@
 /******************************************************
  * utils.h - utility functions for operating systems
- * created 140131 jonathan howard (j@hovverd.com)
+ * created 150131 jonathan howard (j@hovverd.com)
  ******************************************************/
 
 #pragma once

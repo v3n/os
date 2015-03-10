@@ -79,7 +79,7 @@ typedef struct INSTR_Branch
 /* Branch         */
 #define BEQ     0x15 // branch if b-reg == d-reg
 #define BNE     0x16 // branch if b-reg <> d-reg
-#define BEZ     0x17 // branch if b-reg != 0
+#define BEZ     0x17 // branch if b-reg == 0
 #define BNZ     0x18 // branch if b-reg <> 0
 #define BGZ     0x19 // branch if b-reg > 0
 #define BLZ     0x1A // branch if b-reg < 0

@@ -46,8 +46,8 @@ void CPU::fetch(const WORD * instr)
 
 #define CPU_DECODE_CASE(instr, type) \
     case instr: { \
-        DLOG( #instr ); \
-        INSTR_##type instruction = *((INSTR_##type *)&(this->instruction));
+        INSTR_##type instruction = *((INSTR_##type *)&(this->instruction)); \
+        LOG_INSTR_##type( #instr, instruction);
     
 #define CPU_BREAK_CASE \
     break; \

@@ -17,3 +17,10 @@ TEST(OpCode, IsCorrectSize)
     ASSERT_TRUE(sizeof(INSTR_Flow) == 4);
     ASSERT_TRUE(sizeof(INSTR_Branch) == 4);
 }
+
+TEST(CPU_Fetch, InitializesToNULL)
+{
+    CPU * cpu = new CPU();
+    ASSERT_EQ(*R(cpu, -2), NULL);
+}
+

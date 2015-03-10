@@ -44,9 +44,9 @@ typedef struct INSTR_Branch
 {
     uint32_t filter:2;
     uint32_t opcode:6;
-    uint32_t b_reg_a:4;
+    uint32_t b_reg:4;
     uint32_t d_reg:4;
-    uint32_t padding:16;
+    uint32_t address:16;
 } INSTR_Branch;
 
 #define stringify(s) #s

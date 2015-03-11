@@ -55,13 +55,13 @@ typedef struct INSTR_Branch
 #define LOG_INSTR_Arithmatic(op,i) \
     printf("[CPU] " op " s_reg_a: R(%u), s_reg_b: R(%u), d_reg R(%u)\n", i.s_reg_a, i.s_reg_b, i.d_reg)
 #define LOG_INSTR_Register(op,i) \
-    printf("[CPU] " op " reg_a: R(%u), reg_b: R(%u), address: %p", i.reg_a, i.reg_b, BUFFER_OFFSET(i.address))
+    printf("[CPU] " op " reg_a: R(%u), reg_b: R(%u), address: %p\n", i.reg_a, i.reg_b, BUFFER_OFFSET(i.address))
 #define LOG_INSTR_Immediate(op,i) \
     printf("[CPU] " op " b_reg: R(%u), d_reg: R(%u), d_reg R(%u)\n", i.b_reg, i.d_reg, i.d_reg)
 #define LOG_INSTR_Flow(op,i) \
-    printf("[CPU] " op " adress: %p\n", BUFFER_OFFSET(i.address))
+    printf("[CPU] " op " address: %p\n", BUFFER_OFFSET(i.address))
 #define LOG_INSTR_Branch(op,i) \
-    printf("[CPU] " op " b_reg: R(%u), d_reg: R(%u), address: %p", i.b_reg, i.d_reg, BUFFER_OFFSET(i.address))
+    printf("[CPU] " op " b_reg: R(%u), d_reg: R(%u), address: %p\n", i.b_reg, i.d_reg, BUFFER_OFFSET(i.address))
 
 /* Accumulator    */
 #define RD      0x00 // read into accumulator

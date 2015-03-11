@@ -45,7 +45,7 @@ void * RAM::realloc(void * memory, std::size_t size)
     return this->malloc(size);
 }
 
-WORD RAM::EffectiveAddress(WORD logAddress, int baseRegister)
+WORD * RAM::effectiveAddress(WORD * logAddress, int baseRegister)
 {
 	return logAddress + baseRegister;
 

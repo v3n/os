@@ -14,12 +14,7 @@
 /* Access register of this CPU */
 #define R(x) (*((WORD *)this + x))
 
-#define EXTRACT_TYPECODE(x) (0x003 << 30 & x) >> 30
-#define EXTRACT_OPCODE(x)   (0x06F << 24 & x) >> 24
-
-#define EXTRACT_BASE_REG(x) (0x00F << 24 & x) >> 24 
-#define EXTRACT_DEST_REG(x) (0x00F << 20 & x) >> 20
-#define EXTRACT_JMP_ADDR(x) (0xFFF << 0 & x) >> 0
+#define EXTRACT_OPCODE(x)   (0x3F000000 & x) >> 24
 
 CPU::CPU()
 {
@@ -55,12 +50,6 @@ void CPU::fetch(const WORD * instr)
 
 void * CPU::decode()
 {
-    DLOG("%X %X %X %X", instruction >> (sizeof(WORD)*8 - 2),
-                        EXTRACT_OPCODE(instruction),
-                        0xF << 8 & instruction,
-                        0xF << 0 & instruction
-        );
-
     switch (EXTRACT_OPCODE(instruction))
     {
         /* Accumulator    */

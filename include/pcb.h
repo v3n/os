@@ -97,7 +97,7 @@ typedef struct PCB
 	ProcessStatus state;
 	int jobPriority, jobID;
 	int inputBufferSize, outputBufferSize;
-	WORD startAddress, endAddress;
+	WORD startAddress, endAddress, execAddress;
 	WORD inputBufferBegin, outputBufferBegin;
 	int programSize;
 

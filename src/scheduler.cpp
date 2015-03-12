@@ -20,20 +20,20 @@ Scheduler::~Scheduler()
 
 void Scheduler::Enqueue(PCB next)
 {
-	jobQueue.push_back(next);
-	SortQueue(jobQueue, 0, jobQueue.size() - 1);
+	readyQueue.push_back(next);
+	SortQueue(readyQueue, 0, readyQueue.size() - 1);
 }
 
 PCB Scheduler::Peek()
 {
-	return jobQueue.back();
+	return readyQueue.back();
 }
 
 PCB Scheduler::Dequeue()
 {
-	PCB result = jobQueue.back();
-	jobQueue.erase(jobQueue.end());
-	SortQueue(jobQueue, 0, jobQueue.size() - 1);
+	PCB result = readyQueue.back();
+	readyQueue.erase(readyQueue.end());
+	SortQueue(readyQueue, 0, readyQueue.size() - 1);
 	return result;
 }
 

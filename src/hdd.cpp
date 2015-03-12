@@ -26,15 +26,15 @@ HDD::~HDD()
 void * HDD::newFile(size_t size)
 {
     DLOG("[HDD] creating file with size %lu", size);
-    // File * fs;
-    // for (fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + (FILE_SIZE((*fs)) * sizeof(WORD)));
 
-    // return fs;
-    return std::malloc(size);
+    files.push_back((File *)std::malloc(size));
+
+    return files.back();
 }
 
 void * HDD::newFile(size_t id, void * data, size_t size)
 {
+#if 0
 #if DEBUG
     if (id == 0)
         throw std::invalid_argument("id must not equal 0");
@@ -46,16 +46,11 @@ void * HDD::newFile(size_t id, void * data, size_t size)
     std::memcpy(fs + sizeof(File), data, size);
 
     return fs;
+#endif
+    return nullptr;
 }
 
 File * HDD::findFile(unsigned int id)
 {
-    for (File * fs = (File *)buffer; fs->id == 0; fs += sizeof(File) + (FILE_SIZE((*fs)) * sizeof(WORD)))
-    {
-        if (fs->id == id)
-        {
-            return fs;
-        }
-    }
-    return nullptr;
+    return files[id];
 }

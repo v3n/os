@@ -6,6 +6,7 @@
 #pragma once
 
 #include <cstdio>
+#include <vector>
 
 #include "utils.h"
 
@@ -24,6 +25,7 @@ typedef struct File
 {
 private:
 	WORD * buffer;
+    std::vector<File *> files;
 
 public:	
 	HDD();

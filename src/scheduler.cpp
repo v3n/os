@@ -24,9 +24,9 @@ void Scheduler::Enqueue(PCB next)
 	SortQueue(readyQueue, 0, readyQueue.size() - 1);
 }
 
-PCB Scheduler::Peek()
+PCB *Scheduler::Peek()
 {
-	return readyQueue.back();
+	return &readyQueue.back();
 }
 
 PCB Scheduler::Dequeue()
@@ -39,16 +39,16 @@ PCB Scheduler::Dequeue()
 
 void Scheduler::LoadToRAM(PCB toLoad)
 {	
-	toLoad.startAddress = *buffer.currentPtr;
-	toLoad.execAddress = toLoad.startAddress;	
-	buffer.malloc(toLoad.programSize);
-	toLoad.endAddress = *buffer.currentPtr;
+	toLoad.startAddress = *buffer->currentPtr;
+	toLoad.program_counter = toLoad.startAddress;	
+	buffer->malloc(toLoad.programSize);
+	toLoad.endAddress = *buffer->currentPtr;
 	toLoad.state = PROCESS_NEW;
 
-	toLoad.inputBufferBegin = *(buffer.currentPtr + sizeof(WORD));
-	buffer.malloc(toLoad.inputBufferSize);
-	toLoad.outputBufferBegin = *(buffer.currentPtr + sizeof(WORD));
-	buffer.malloc(toLoad.outputBufferSize);
+	toLoad.inputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
+	buffer->malloc(toLoad.inputBufferSize);
+	toLoad.outputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
+	buffer->malloc(toLoad.outputBufferSize);
 
 	Enqueue(toLoad);
 }

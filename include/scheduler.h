@@ -13,7 +13,7 @@
 class Scheduler
 {
 private:
-	RAM buffer;
+	RAM *buffer;
 	std::map<int, PCB> jobs;
 	std::vector<PCB> readyQueue;
 	void Swap(PCB x, PCB y);
@@ -22,7 +22,7 @@ private:
 
 public:
 	void Enqueue(PCB next);
-	PCB Peek();
+	PCB *Peek();
 	PCB Dequeue();
 	Scheduler();
 	~Scheduler();

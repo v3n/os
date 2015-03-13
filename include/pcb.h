@@ -2,7 +2,7 @@
  * cpu.h - cpu class header
  * created 150223 jonathan howard (j@hovverd.com)
  ******************************************************/
-
+#pragma once
 #include "utils.h"
 #include <iostream>
 #include <cstring>
@@ -96,8 +96,8 @@ typedef struct PCB
 {
 	ProcessStatus state;
 	int jobPriority, jobID;
-	int inputBufferSize, outputBufferSize;
-	WORD startAddress, endAddress, execAddress;
+	int inputBufferSize, outputBufferSize, execAddress;
+	WORD startAddress, endAddress;	
 	WORD inputBufferBegin, outputBufferBegin;
 	int programSize;
 

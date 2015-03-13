@@ -40,7 +40,7 @@ PCB Scheduler::Dequeue()
 void Scheduler::LoadToRAM(PCB toLoad)
 {	
 	toLoad.startAddress = *buffer.currentPtr;
-	toLoad.execAddress = toLoad.startAddress;	//Currently pointed instruction
+	toLoad.execAddress = toLoad.startAddress;	
 	buffer.malloc(toLoad.programSize);
 	toLoad.endAddress = *buffer.currentPtr;
 	toLoad.state = PROCESS_NEW;

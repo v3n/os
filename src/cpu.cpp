@@ -34,7 +34,7 @@ CPU::operator WORD*() const
 
 void CPU::fetch(const WORD * instr)
 {
-    memcpy(&state.instruction, instr, sizeof(WORD));
+    memcpy(&(state.instruction), instr, sizeof(WORD));
     state.program_counter++;
 }
 

@@ -5,6 +5,7 @@
 
 #include <new>
 #include <cstdint>
+#include <cmath>
 
 #include "ram.h"
 
@@ -60,23 +61,30 @@ WORD * RAM::effectiveAddress(WORD * logAddress, int baseRegister)
 
 WORD * RAM::alloc(std::size_t size)
 {
-	//starts with 1024 words
-	struct block
-	{
+	RAMStruct * bestBlock = nullptr;
 
-	} block;
-	//if size is <1024, then divide in half
-	std::size_t newSize;
-	newSize = 1024;
-	while (size < newSize)
+	for (RAMStruct * p = (RAMStruct *)buffer; p != (RAMStruct *)(buffer + 1024); p += (1 << p->size))
 	{
-		newSize = newSize / 2;
+		if (p->isFree)
+		{
+			if ((size + sizeof(RAMStruct)) < (1 << p->size) && (!bestBlock || p->size < bestBlock->size))
+			{
+				bestBlock = p;
+			}
+		}
 	}
-	return *NULL;
-	//divide in half
-	//divide in half
-	//first 128 words reserved for OS
-	//returns pointer to location for item to be stored
+
+	if (!bestBlock)
+	{
+		throw std::bad_alloc();
+	}
+	else
+	{
+		bestBlock->isFree = true;
+		return (WORD *)((char *)bestBlock + sizeof(RAMStruct));
+	}
+
+	return nullptr;
 }
 
 void RAM::free(void * memory)

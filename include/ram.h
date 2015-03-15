@@ -18,6 +18,7 @@ private:
 	{
 		uint8_t size;
 		WORD * next;
+		bool isFree;
 	} RAMStruct;
 
 public: 
@@ -29,5 +30,5 @@ public:
     void * calloc(std::size_t, std::size_t);
     void * realloc(void *, std::size_t);
     void free(void *);
-	void * alloc();
+	WORD * alloc(std::size_t size);
 };

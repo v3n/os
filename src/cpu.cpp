@@ -18,7 +18,6 @@
 
 CPU::CPU()
 {
-    // registers = WORD[16];
     instruction = NULL;
     program_counter = 0;
 }
@@ -30,7 +29,7 @@ CPU::~CPU()
 
 CPU::operator WORD*() const
 {
-    return const_cast<WORD *>(&registers);
+    return const_cast<WORD *>(registers);
 }
 
 void CPU::fetch(const WORD * instr)
@@ -112,6 +111,7 @@ void * CPU::decode()
         CPU_DECODE_CASE(BLZ,  Branch)
             CPU_BREAK_CASE
         default:
+            DLOG("Unknown opcode.");
             return nullptr;
             break;
     }

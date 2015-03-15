@@ -24,7 +24,7 @@ void Dispatcher::GetNextProcess()
 
 void Dispatcher::SetCPUParameters(PCB instr)
 {
-
+	memcpy(CPU.state, PCB.CPUState, sizeof(CPUState));
 }
 
 PCB Dispatcher::GetProcessState(PCB proc)

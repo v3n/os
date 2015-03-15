@@ -72,9 +72,9 @@ Loader::Loader(std::string file, HDD * hdd)
 						/* copy file header */
 						std::memcpy(pFile, &file, sizeof(File));
 						/* copy program opcodes */
-						std::memcpy(pFile + sizeof(File), program.data(), program.size() * sizeof(WORD));
+						std::memcpy(pFile + 1, program.data(), program.size() * sizeof(WORD));
 
-						WORD * currentWord = (WORD *)pFile + sizeof(File) + (program.size() * sizeof(WORD));
+						WORD * currentWord = (WORD *)(pFile + 1) + program.size();
 						/* parse and copy data */
 						for (std::size_t i = 0; i < (dataSize); i++)
 						{

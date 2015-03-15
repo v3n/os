@@ -121,4 +121,5 @@ void * CPU::decode()
 }
 
 #undef CPU_DECODE_CASE
+#undef CPU_BREAK_CASE
 

@@ -100,5 +100,5 @@ typedef struct PCB
 	WORD startAddress, endAddress, program_counter;	
 	WORD inputBufferBegin, outputBufferBegin;
 	int programSize;
-
+	CPUState cpuState;
 } PCB;

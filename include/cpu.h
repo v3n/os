@@ -4,16 +4,13 @@
  ******************************************************/
 
 #include "utils.h"
+#include "pcb.h"
 
 class CPU
 {
 private:
     /* register memory in hardware, simluating hardware cache */ 
-    struct {
-        WORD instruction;
-        WORD program_counter;
-        WORD registers[16];
-    };
+    CPUState state;
 
 public:
     CPU();

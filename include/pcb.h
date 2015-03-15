@@ -60,7 +60,7 @@ typedef struct CPUState
 {
     WORD instruction;
     WORD program_counter;
-    WORD registers;
+    WORD registers[16];
 } CPUState;
 
 typedef struct SchedulerState

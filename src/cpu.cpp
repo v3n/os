@@ -18,8 +18,8 @@
 
 CPU::CPU()
 {
-    instruction = NULL;
-    program_counter = 0;
+    // zero-initiliaze struct
+    state = {};
 }
 
 CPU::~CPU()
@@ -29,18 +29,18 @@ CPU::~CPU()
 
 CPU::operator WORD*() const
 {
-    return const_cast<WORD *>(registers);
+    return const_cast<WORD *>(state.registers);
 }
 
 void CPU::fetch(const WORD * instr)
 {
-    memcpy(&instruction, instr, sizeof(WORD));
-    program_counter++;
+    memcpy(&state.instruction, instr, sizeof(WORD));
+    state.program_counter++;
 }
 
 #define CPU_DECODE_CASE(instr, type) \
     case instr: { \
-        INSTR_##type instruction = *((INSTR_##type *)&(this->instruction)); \
+        INSTR_##type instruction = *((INSTR_##type *)&(this->state.instruction)); \
         LOG_INSTR_##type( #instr, instruction);
     
 #define CPU_BREAK_CASE \
@@ -49,7 +49,7 @@ void CPU::fetch(const WORD * instr)
 
 void * CPU::decode()
 {
-    switch (EXTRACT_OPCODE(instruction))
+    switch (EXTRACT_OPCODE(state.instruction))
     {
         /* Accumulator    */
         CPU_DECODE_CASE(RD,   Register)

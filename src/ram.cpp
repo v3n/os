@@ -4,6 +4,7 @@
  ******************************************************/
 
 #include <new>
+#include <cstdint>
 
 #include "ram.h"
 
@@ -55,6 +56,27 @@ WORD * RAM::effectiveAddress(WORD * logAddress, int baseRegister)
 	std::string effAddStr = std::to_string(effAdd);
 	std::string result = BaseConverter::baseConvert(effAddStr, 10, 16);
 	return result;*/
+}
+
+WORD * RAM::alloc(std::size_t size)
+{
+	//starts with 1024 words
+	struct block
+	{
+
+	} block;
+	//if size is <1024, then divide in half
+	std::size_t newSize;
+	newSize = 1024;
+	while (size < newSize)
+	{
+		newSize = newSize / 2;
+	}
+	return *NULL;
+	//divide in half
+	//divide in half
+	//first 128 words reserved for OS
+	//returns pointer to location for item to be stored
 }
 
 void RAM::free(void * memory)

@@ -66,14 +66,14 @@ void Scheduler::LoadToRAM(PCB toLoad)
 {	
 	toLoad.startAddress = *buffer->currentPtr;
 	toLoad.program_counter = toLoad.startAddress;	
-	buffer->malloc(toLoad.programSize);
+	buffer->allocate(toLoad.programSize);
 	toLoad.endAddress = *buffer->currentPtr;
 	toLoad.state = PROCESS_NEW;
 
 	toLoad.inputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
-	buffer->malloc(toLoad.inputBufferSize);
+	buffer->allocate(toLoad.inputBufferSize);
 	toLoad.outputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
-	buffer->malloc(toLoad.outputBufferSize);
+	buffer->allocate(toLoad.outputBufferSize);
 
 	Enqueue(toLoad);
 }

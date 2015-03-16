@@ -10,7 +10,12 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
     HDD *hdd = new HDD();
-    Loader *l = new Loader("..\\OSProj\\spec\\Program-File.txt", hdd);
+#ifdef __APPLE__
+	Loader *l = nnew Loader("/Users/jonathan/Development/os/spec/Program-File.txt", hdd);
+#elif _WIN32
+	Loader *l = new Loader("..\\OSProj\\spec\\Program-File.txt", hdd);
+#endif
+
     CPU *cpu = new CPU();
 
     File * file = hdd->findFile(1);

@@ -63,6 +63,13 @@ WORD * RAM::alloc(std::size_t size)
 {
 	RAMStruct * bestBlock = nullptr;
 
+    /* find the best-fit order */
+    unsigned int order = 1;
+    while ( (1 << order) < (size + sizeof(RAMStruct)) )
+    {
+        order++;
+    }
+
 	for (RAMStruct * p = (RAMStruct *)buffer; p != (RAMStruct *)(buffer + 1024); p += (1 << p->size))
 	{
 		if (p->isFree)

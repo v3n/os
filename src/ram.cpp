@@ -10,6 +10,7 @@
 #include "ram.h"
 
 #define BUFFER_SIZE (1024 * sizeof(WORD))
+#define blockSize(i) (1 << i)
 
 RAM::RAM()
 {
@@ -24,53 +25,18 @@ RAM::~RAM()
     delete[] buffer;
 }
 
-void * RAM::malloc(std::size_t size)
-{
-    void * ReturnPtr = allocatedPtr;
-    allocatedPtr += size * sizeof(WORD);
-
-    DLOG("[RAM] allocating %lu words at address %p", size, (void*)((WORD *)ReturnPtr - (WORD *)buffer));
-
-    if ( allocatedPtr > (buffer + BUFFER_SIZE) )
-        throw std::bad_alloc();
-    return ReturnPtr;
-}
-
-void * RAM::calloc(std::size_t number, std::size_t size)
-{
-    return this->malloc(number * size * sizeof(WORD));
-}
-
-void * RAM::realloc(void * memory, std::size_t size)
-{
-    this->free(memory);
-    return this->malloc(size);
-}
-
-WORD * RAM::effectiveAddress(WORD * logAddress, int baseRegister)
-{
-	return logAddress + baseRegister;
-
-	/*std::string logAddDec = BaseConverter::baseConvert(logAddHex, 16, 10);
-	WORD computedLogAdd = std::stoul(logAddDec);
-	WORD effAdd = computedLogAdd + baseReg;
-	std::string effAddStr = std::to_string(effAdd);
-	std::string result = BaseConverter::baseConvert(effAddStr, 10, 16);
-	return result;*/
-}
-
-WORD * RAM::alloc(std::size_t size)
+WORD * RAM::allocate(std::size_t size)
 {
 	RAMStruct * bestBlock = nullptr;
 
     /* find the best-fit order */
     unsigned int order = 1;
-    while ( (1 << order) < (size + sizeof(RAMStruct)) )
+    while ( blockSize(order) < (size + sizeof(RAMStruct)) )
     {
         order++;
     }
 
-	for (RAMStruct * p = (RAMStruct *)buffer; p != (RAMStruct *)(buffer + 1024); p += (1 << p->size))
+	for (RAMStruct * p = (RAMStruct *)buffer; p != (RAMStruct *)(buffer + 1024); p += blockSize(p->size))
 	{
 		if (p->isFree)
 		{
@@ -88,13 +54,14 @@ WORD * RAM::alloc(std::size_t size)
 	else
 	{
 		bestBlock->isFree = true;
+        DLOG("[RAM] allocating %lu words at address %p", size, (void*)((WORD *)((char *)bestBlock + sizeof(RAMStruct)) - (WORD *)buffer));
 		return (WORD *)((char *)bestBlock + sizeof(RAMStruct));
 	}
 
 	return nullptr;
 }
 
-void RAM::free(void * memory)
+void RAM::deallocate(void * memory)
 {
 
 }

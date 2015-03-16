@@ -26,9 +26,6 @@ public:
     ~RAM();
 
 	WORD * currentPtr;	
-    void * malloc(std::size_t);
-    void * calloc(std::size_t, std::size_t);
-    void * realloc(void *, std::size_t);
-    void free(void *);
-	WORD * alloc(std::size_t size);
+    WORD * allocate(std::size_t size);
+    void deallocate(void *);
 };

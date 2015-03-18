@@ -6,6 +6,7 @@
 #include <new>
 #include <cstdint>
 #include <cmath>
+#include <cstring>
 #include <functional>
 
 #include "ram.h"

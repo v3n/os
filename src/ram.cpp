@@ -15,9 +15,12 @@
 RAM::RAM()
 {
     buffer = new WORD[1024]();
+    /* 2^9 (512) word base allocation */
+    ((BlockTag *)buffer)->order = 9;
+    ((BlockTag *)(buffer + blockSize(9)))->order = 9;
 
-    allocatedPtr = buffer;
-	currentPtr = allocatedPtr;
+    ((BlockTag *)buffer)->isFree = true;
+    ((BlockTag *)(buffer + blockSize(9)))->isFree = true;
 }
 
 RAM::~RAM()
@@ -27,22 +30,25 @@ RAM::~RAM()
 
 WORD * RAM::allocate(std::size_t size)
 {
-	RAMStruct * bestBlock = nullptr;
+	BlockTag * bestBlock = nullptr;
 
-    /* find the best-fit order */
+    /* calculate order for best fit, this is ceil(log2(size))  */
     unsigned int order = 1;
-    while ( blockSize(order) < (size + sizeof(RAMStruct)) )
-    {
-        order++;
-    }
+    for (order = 0; blockSize( order ) < size; order++);
 
-	for (RAMStruct * p = (RAMStruct *)buffer; p != (RAMStruct *)(buffer + 1024); p += blockSize(p->size))
+    
+    /* find */
+	for (BlockTag * p = (BlockTag *)buffer; p != (BlockTag *)(buffer + 1024); p += blockSize(p->order))
 	{
 		if (p->isFree)
 		{
-			if ((size + sizeof(RAMStruct)) < (1 << p->size) && (!bestBlock || p->size < bestBlock->size))
+			if ( order <= p->order )
 			{
-				bestBlock = p;
+                /* select block if we don't have one otherwise best fit */
+                if ( bestBlock == nullptr || p->order < bestBlock->order )
+                {
+				    bestBlock = p;
+                }
 			}
 		}
 	}
@@ -54,8 +60,8 @@ WORD * RAM::allocate(std::size_t size)
 	else
 	{
 		bestBlock->isFree = true;
-        DLOG("[RAM] allocating %lu words at address %p", size, (void*)((WORD *)((char *)bestBlock + sizeof(RAMStruct)) - (WORD *)buffer));
-		return (WORD *)((char *)bestBlock + sizeof(RAMStruct));
+        DLOG("[RAM] allocating %lu words at address %p", size, (void*)((WORD *)((char *)bestBlock + sizeof(BlockTag)) - (WORD *)buffer));
+		return (WORD *)((char *)bestBlock + sizeof(BlockTag));
 	}
 
 	return nullptr;
@@ -63,6 +69,8 @@ WORD * RAM::allocate(std::size_t size)
 
 void RAM::deallocate(void * memory)
 {
+    WORD * block = (WORD *)((char *)memory - sizeof(BlockTag));
+    WORD * buddy = (WORD *)((intptr_t)block ^ blockSize( ((BlockTag *)block)->order) );
 
 }
 

@@ -11,15 +11,13 @@ class RAM
 {
 private:
     WORD * buffer;
-    WORD * allocatedPtr;
 	WORD * effectiveAddress(WORD * logAddress, int baseRegister);
 
-	typedef struct RAMStruct
+	typedef struct BlockTag
 	{
-		uint8_t size;
-		WORD * next;
+		uint8_t order;
 		bool isFree;
-	} RAMStruct;
+	} BlockTag;
 
 public: 
     RAM();

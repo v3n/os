@@ -25,6 +25,7 @@ int main(int argc, char const *argv[])
 
 	std::chrono::steady_clock::time_point start;
 	std::chrono::steady_clock::time_point end;
+	// std::chrono::steady_clock::time_point start;
     for (unsigned i = 0; i < file->programSize; i++)
     {
 		start = std::chrono::steady_clock::now();

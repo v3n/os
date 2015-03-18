@@ -6,6 +6,7 @@
 #include <new>
 #include <cstdint>
 #include <cmath>
+#include <functional>
 
 #include "ram.h"
 
@@ -35,7 +36,6 @@ WORD * RAM::allocate(std::size_t size)
     /* calculate order for best fit, this is ceil(log2(size))  */
     unsigned int order = 1;
     for (order = 0; blockSize( order ) < size; order++);
-
     
     /* find */
 	for (BlockTag * p = (BlockTag *)buffer; p != (BlockTag *)(buffer + 1024); p += blockSize(p->order))
@@ -59,8 +59,8 @@ WORD * RAM::allocate(std::size_t size)
 	}
 	else
 	{
-		bestBlock->isFree = true;
-        DLOG("[RAM] allocating %lu words at address %p", size, (void*)((WORD *)((char *)bestBlock + sizeof(BlockTag)) - (WORD *)buffer));
+		bestBlock->isFree = false;
+        DLOG("[RAM] allocating %lu words at relative address %p", size, (void*)((WORD *)((char *)bestBlock + sizeof(BlockTag)) - (WORD *)buffer));
 		return (WORD *)((char *)bestBlock + sizeof(BlockTag));
 	}
 
@@ -69,9 +69,50 @@ WORD * RAM::allocate(std::size_t size)
 
 void RAM::deallocate(void * memory)
 {
-    WORD * block = (WORD *)((char *)memory - sizeof(BlockTag));
-    WORD * buddy = (WORD *)((intptr_t)block ^ blockSize( ((BlockTag *)block)->order) );
+    if ( memory == nullptr )
+    {
+        return;
+    }
 
-}
+    BlockTag * block = (BlockTag *)((char *)memory - sizeof(BlockTag));
+    BlockTag * buddy = (BlockTag *)((intptr_t)block ^ blockSize( ((BlockTag *)block)->order) );
+
+    uint8_t freeingOrder = block->order;
+
+    /* combining blocks */
+    if ( buddy->isFree ) 
+    {
+        freeingOrder++;
+
+        BlockTag * firstBlock;
+
+        std::less<void *> lss;
+
+        if ( lss(buddy, block) ) // | buddy | block |
+        {
+            firstBlock = (BlockTag *)buddy;
+        }
+        else // | block | buddy |
+        {
+            firstBlock = (BlockTag *)block;
+        }
+        /* Zero both blocks simultaneously */
+        memset(firstBlock, 0, blockSize( freeingOrder ) * sizeof(WORD));
+
+        firstBlock->isFree = true;
+        firstBlock->order = freeingOrder;
+
+        DLOG("[RAM] deallocating %i words by combining blocks at relative addresses %p and %p", blockSize(freeingOrder), block, buddy);
+    }
+    else /* freeing a single block */
+    {
+        memset(block, 0, blockSize( freeingOrder ) * sizeof(WORD));
+        block->isFree = true;
+        block->order  = freeingOrder;
+
+        DLOG("[RAM] deallocating %i words in single block at %p", blockSize( freeingOrder ), block);
+    }
+
+}   
 
 #undef BUFFER_SIZE

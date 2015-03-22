@@ -9,15 +9,14 @@ class Dispatcher
 public:
 	Dispatcher();
 	~Dispatcher();
-	PCB *next_process;
-	Scheduler *scheduler;
+	static PCB *next_process;
+	static Scheduler *scheduler;
 
 	WORD * GetInstruction(PCB nextInstr, WORD pc);
 	void SetCPUParameters(PCB instr);
 
 private:
 	PCB GetProcessState(PCB proc);
-	void GetNextProcess();
-	void SetProcessState(PCB proc, PCB toCopy);
+	static void GetNextProcess();
 };
 

@@ -15,8 +15,7 @@ class Scheduler
 private:
 	RAM *buffer;
 	std::map<int, PCB> jobs;
-	std::vector<PCB> readyQueue;
-	std::vector<std::vector<PCB>> readyQueues;
+	std::vector<PCB> readyQueue;	
 	void Swap(PCB x, PCB y);
 	void SortQueue(std::vector<PCB> &toSort, int left, int right);	
 	void LoadToRAM(PCB toLoad);	
@@ -24,10 +23,8 @@ private:
 
 public:
 	void Enqueue(PCB next);
-	PCB *Peek();
-	PCB *Peek(int i);
-	PCB Dequeue();
-	PCB Dequeue(int i);	//indexing for multi-core system; each queue corresponds to a specific queue
+	PCB *Peek();	
+	PCB Dequeue();	
 	Scheduler();
 	Scheduler(int numCores);
 	~Scheduler();

@@ -27,12 +27,3 @@ void Dispatcher::SetCPUParameters(PCB instr)
 	// memcpy(CPU.state, PCB.CPUState, sizeof(CPUState));
 }
 
-PCB Dispatcher::GetProcessState(PCB proc)
-{
-	return proc;
-}
-
-void Dispatcher::SetProcessState(PCB proc, PCB toCopy)
-{
-
-}

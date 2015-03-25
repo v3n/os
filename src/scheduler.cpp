@@ -25,14 +25,12 @@ void Scheduler::Enqueue(PCB next)
 }
 
 PCB *Scheduler::Peek()
-{
-	int nextQueue = GetShortestQueue();
+{	
 	return &readyQueue.back();
 }
 
 PCB Scheduler::Dequeue()
-{
-	int nextQueue = GetShortestQueue();
+{	
 	PCB result = readyQueue.back();
 	readyQueue.erase(readyQueue.end());
 	SortQueue(readyQueue, 0, readyQueue.size() - 1);
@@ -52,8 +50,15 @@ void Scheduler::LoadToRAM(PCB toLoad)
 	buffer->allocate(toLoad.inputBufferSize);
 	toLoad.outputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
 	buffer->allocate(toLoad.outputBufferSize);
+	jobs[toLoad.jobID] = toLoad;
 
 	Enqueue(toLoad);
+}
+
+void Scheduler::LoadJobs()
+{
+	//while room for jobs in RAM AND readyqueue not full
+	//LoadToRAM(PCB of next job)
 }
 
 void Scheduler::Swap(PCB x, PCB y)
@@ -62,21 +67,6 @@ void Scheduler::Swap(PCB x, PCB y)
 	x = y;
 	y = tmp;
 }
-
-//int Scheduler::GetShortestQueue()
-//{
-//	int shortest_index = 0;
-//	int shortest = readyQueues[0].size();
-//	for (int i = 0; i < readyQueues.size(); i++)
-//	{
-//		if (readyQueues[i].size() < shortest)
-//		{
-//			shortest = readyQueues[i].size();
-//			shortest_index = i;
-//		}
-//	}
-//	return shortest_index;
-//}
 
 void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)
 {		

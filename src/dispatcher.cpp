@@ -9,11 +9,16 @@ Dispatcher::~Dispatcher()
 {
 }
 
-WORD * Dispatcher::GetInstruction(PCB nextInst, WORD pc)
+PCB Dispatcher::GetProcessInfo(int pID)
+{
+	return Scheduler::jobs[pID];
+}
+
+WORD * Dispatcher::GetInstruction(PCB nextInst)
 {	
 	WORD *toReturn;
-	nextInst.program_counter += pc;	//pass in CPU's program_counter value to get current instruction
-	toReturn = (WORD*)&nextInst.program_counter;
+	toReturn = (WORD*)nextInst.startAddress + (nextInst.program_counter * sizeof(WORD));
+	nextInst.program_counter++;
 	return toReturn;
 }
 

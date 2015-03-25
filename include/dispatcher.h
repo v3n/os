@@ -12,11 +12,9 @@ public:
 	static PCB *next_process;
 	static Scheduler *scheduler;
 
-	WORD * GetInstruction(PCB nextInstr, WORD pc);
+	WORD * GetInstruction(PCB nextInstr);
 	void SetCPUParameters(PCB instr);
-
-private:
-	PCB GetProcessState(PCB proc);
+	PCB GetProcessInfo(int pID);	
 	static void GetNextProcess();
 };
 

@@ -7,6 +7,8 @@
 
 class Loader
 {
+private:
+	void ReadtoPCB(File toRead);
 public:
 	Loader(std::string, HDD *);
 };

@@ -5,6 +5,7 @@
 
 #include "loader.h"
 #include "hdd.h"
+#include "scheduler.h"
 
 Loader::Loader(std::string file, HDD * hdd)
 {
@@ -126,4 +127,13 @@ Loader::Loader(std::string file, HDD * hdd)
 	ifs.close();
 
 	DLOG("Finished parsing program file.");
+}
+
+void Loader::ReadtoPCB(File toRead)	//read file information into scheduler's PCB map
+{	
+	Scheduler::jobs[toRead.id].jobID = toRead.id;
+	Scheduler::jobs[toRead.id].jobPriority = toRead.priority;
+	Scheduler::jobs[toRead.id].programSize = toRead.programSize;
+	Scheduler::jobs[toRead.id].inputBufferSize = toRead.inputBufferSize;
+	Scheduler::jobs[toRead.id].outputBufferSize = toRead.outputBufferSize;
 }

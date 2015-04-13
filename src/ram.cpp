@@ -9,6 +9,8 @@
 #include <cstring>
 #include <functional>
 
+#include <iostream>
+
 #include "ram.h"
 
 #define BUFFER_SIZE (1024 * sizeof(WORD))
@@ -36,9 +38,9 @@ WORD * RAM::allocate(std::size_t size)
 
     /* calculate order for best fit, this is ceil(log2(size))  */
     unsigned int order = 1;
-    for (order = 0; blockSize( order ) < size; order++);
-    
-    /* find */
+    for (order = 0; blockSize( order ) - sizeof(BlockTag) < size; order++);
+
+    /* find best fit block to allocate in */
 	for (BlockTag * p = (BlockTag *)buffer; p != (BlockTag *)(buffer + 1024); p += blockSize(p->order))
 	{
 		if (p->isFree)
@@ -60,10 +62,25 @@ WORD * RAM::allocate(std::size_t size)
 	}
 	else
 	{
-		bestBlock->isFree = false;
+        /* subdividing block */
+        while(bestBlock->order != order)
+        { 
+            bestBlock->order--;
+            BlockTag * friendBlock = (BlockTag *)((char *)bestBlock + blockSize( bestBlock->order ) * sizeof(WORD));
+            
+            friendBlock->order = bestBlock->order;
+            friendBlock->isFree = true;
+
+            DLOG("[RAM] splitting block of order %i at relative address %p", bestBlock->order, (void*)((WORD *)((char *)bestBlock + sizeof(BlockTag)) - (WORD *)buffer));
+
+            /* push smaller allocations to end */
+            bestBlock = friendBlock;
+        }
+
+        bestBlock->isFree = false;
         DLOG("[RAM] allocating %lu words at relative address %p", size, (void*)((WORD *)((char *)bestBlock + sizeof(BlockTag)) - (WORD *)buffer));
-		return (WORD *)((char *)bestBlock + sizeof(BlockTag));
-	}
+        return (WORD *)((char *)bestBlock + sizeof(BlockTag));
+    }
 
 	return nullptr;
 }
@@ -114,6 +131,7 @@ void RAM::deallocate(void * memory)
         DLOG("[RAM] deallocating %i words in single block at %p", blockSize( freeingOrder ), block);
     }
 
+    std::cout << buffer << std::endl << block << std::endl << buddy << std::endl << block - buddy << std::endl;
 }   
 
 #undef BUFFER_SIZE

@@ -50,7 +50,7 @@ void Scheduler::LoadToRAM(PCB toLoad)
 	buffer->allocate(toLoad.inputBufferSize);
 	toLoad.outputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
 	buffer->allocate(toLoad.outputBufferSize);
-	jobs[toLoad.jobID] = toLoad;
+	//jobs[toLoad.jobID] = toLoad;
 
 	Enqueue(toLoad);
 }

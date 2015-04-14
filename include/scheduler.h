@@ -21,7 +21,7 @@ private:
 	void LoadJobs();
 
 public:
-	static std::map<int, PCB> jobs;
+	//static std::map<int, PCB> jobs;
 	void Enqueue(PCB next);
 	PCB *Peek();	
 	PCB Dequeue();	

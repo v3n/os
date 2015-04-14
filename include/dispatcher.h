@@ -9,8 +9,8 @@ class Dispatcher
 public:
 	Dispatcher();
 	~Dispatcher();
-	static PCB *next_process;
-	static Scheduler *scheduler;
+	//static PCB *next_process;
+	//static Scheduler *scheduler;
 
 	WORD * GetInstruction(PCB nextInstr);
 	void SetCPUParameters(PCB instr);

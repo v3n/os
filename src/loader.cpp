@@ -131,9 +131,9 @@ Loader::Loader(std::string file, HDD * hdd)
 
 void Loader::ReadtoPCB(File toRead)	//read file information into scheduler's PCB map
 {	
-	Scheduler::jobs[toRead.id].jobID = toRead.id;
+	/*Scheduler::jobs[toRead.id].jobID = toRead.id;
 	Scheduler::jobs[toRead.id].jobPriority = toRead.priority;
 	Scheduler::jobs[toRead.id].programSize = toRead.programSize;
 	Scheduler::jobs[toRead.id].inputBufferSize = toRead.inputBufferSize;
-	Scheduler::jobs[toRead.id].outputBufferSize = toRead.outputBufferSize;
+	Scheduler::jobs[toRead.id].outputBufferSize = toRead.outputBufferSize;*/
 }

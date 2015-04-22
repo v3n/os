@@ -17,6 +17,9 @@ before_install:
 
     - sudo apt-get update -qq
 
+# boost
+    - sudo apt-get install libboost-thread-dev libboost-system-dev
+
 install:
     - sudo apt-get install --force-yes make premake4
 

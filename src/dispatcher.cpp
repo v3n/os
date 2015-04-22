@@ -3,17 +3,15 @@
 
 Dispatcher::Dispatcher()
 {
-	//next_process = nullptr;
+	next_process = nullptr;
 }
 Dispatcher::~Dispatcher()
 {
 }
 
-PCB Dispatcher::GetProcessInfo(int pID)
+PCB Dispatcher::GetProcessInfo(Scheduler next, int pID)
 {
-	//return Scheduler::jobs[pID];
-	PCB tmp;	//stubbed in to fix build
-	return tmp;
+	return next.jobs[pID];
 }
 
 WORD * Dispatcher::GetInstruction(PCB nextInst)
@@ -24,9 +22,9 @@ WORD * Dispatcher::GetInstruction(PCB nextInst)
 	return toReturn;
 }
 
-void Dispatcher::GetNextProcess()
+void Dispatcher::GetNextProcess(Scheduler next)
 {
-	//next_process = scheduler->Peek();
+	next_process = next.Peek();
 }
 
 void Dispatcher::SetCPUParameters(PCB instr)

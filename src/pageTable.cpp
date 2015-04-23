@@ -31,7 +31,7 @@ void PageTable::FreePage(int page_num, PCB proc_id)
 	free_frames.push_back(page_num);		//add page num to the free frame list
 }
 
-WORD* PageTable::LookupPage(int index, int offset)
+WORD* PageTable::LookupPage(int index, int offset)	//return RAM location based on index/offset of pagetable
 {
 	//return location in RAM defined by:
 	//index * 4 + offset

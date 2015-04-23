@@ -1,0 +1,26 @@
+/*Current needs of OS project (speculative), as of 04/23/2015*/
+/*If I've misinterpreted something, feel free to revise/remove*/
+
+Scheduler Needs:
+  Method to return whether or not RAM is currently full
+  Revamped LoadToRAM method to reflect paging
+
+RAM Needs:
+  To be partitioned into pages
+  Revised allocate/deallocate, etc methods to reflect RAM paging
+
+Dispatcher Needs:
+  A finished SetCPUParams method
+
+CPU Needs:
+  ???
+
+Pagetable Needs:
+  Functional lookup method
+  RAM interfacing
+
+Loader Needs:
+  A revised loading process to reflect HDD framing
+
+Hard Drive Needs:
+  To be partitioned into frames

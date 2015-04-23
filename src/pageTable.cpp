@@ -39,3 +39,8 @@ WORD* PageTable::LookupPage(int index, int offset)	//return RAM location based o
 	WORD* tmp;	//brief stub so build works...
 	return tmp;
 }
+
+void PageTable::ResolveFaults()
+{
+
+}

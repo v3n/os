@@ -9,9 +9,9 @@ Dispatcher::~Dispatcher()
 {
 }
 
-PCB Dispatcher::GetProcessInfo(Scheduler next, int pID)	//returns PCB info based on given job ID
+PCB Dispatcher::GetProcessInfo(int pID)	//returns PCB info based on given job ID
 {
-	return next.jobs[pID];
+	return long_term->jobs[pID];
 }
 
 WORD * Dispatcher::GetInstruction(PCB nextInst)		//returns the instruction pointed by the given job's current PC value
@@ -22,9 +22,9 @@ WORD * Dispatcher::GetInstruction(PCB nextInst)		//returns the instruction point
 	return toReturn;
 }
 
-void Dispatcher::GetNextProcess(Scheduler next)		//returns the next process in the readyQueue
+void Dispatcher::GetNextProcess()		//returns the next process in the readyQueue
 {
-	next_process = next.Peek();
+	next_process = long_term->Peek();
 }
 
 void Dispatcher::SetCPUParameters(PCB instr)		//ideally, sets CPU info before process begins

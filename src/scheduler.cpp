@@ -41,6 +41,7 @@ PCB Scheduler::Dequeue()		//remove and return the job at the front of the readyQ
 
 void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing information in that job's PCB
 {	
+<<<<<<< HEAD
 	WORD *ptrToJob;
 	ptrToJob = (WORD*)ram->allocate(4, true);
 	ptrToJob = &toLoad.startAddress;
@@ -52,6 +53,13 @@ void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing 
 	ptrToProgramSize = (WORD*)ram->allocate(4, true);
 	ptrToProgramSize = &toLoad.programSize;
 	//buffer->allocate(toLoad.programSize);
+=======
+	toLoad.startAddress = *buffer->currentPtr;		//with paged memory, this will all have to change...
+	toLoad.program_counter = toLoad.startAddress;	
+	buffer->allocate(toLoad.programSize);
+	toLoad.endAddress = *buffer->currentPtr;
+	toLoad.state = PROCESS_NEW;
+>>>>>>> Various tweaks, twerks, and otherwise...
 
 	//toLoad.endAddress = *buffer->currentPtr;
 	toLoad.state = PROCESS_NEW;

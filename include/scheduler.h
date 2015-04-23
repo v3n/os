@@ -7,6 +7,7 @@
 #include <map>
 #include <vector>
 #include "utils.h"
+#include "pageTable.h"
 #include "pcb.h"
 #include "ram.h"
 #include "hdd.h"
@@ -18,6 +19,8 @@ class Scheduler
 private:
 	Ram *ram;	
 	HDD *drive;
+	PageTable *p_table;
+
 	unsigned int next_job;
 	std::vector<PCB> readyQueue;	
 	void Swap(PCB x, PCB y);

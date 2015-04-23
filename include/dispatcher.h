@@ -10,10 +10,11 @@ public:
 	Dispatcher();
 	~Dispatcher();
 	PCB *next_process;
+	Scheduler *long_term;
 
 	WORD * GetInstruction(PCB nextInstr);
 	void SetCPUParameters(PCB instr);
-	PCB GetProcessInfo(Scheduler next, int pID);	
-	void GetNextProcess(Scheduler next);
+	PCB GetProcessInfo(int pID);	
+	void GetNextProcess();
 };
 

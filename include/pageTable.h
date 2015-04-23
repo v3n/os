@@ -15,6 +15,7 @@ public:
 	WORD* LookupPage(int index, int offset);		//search table and return corresponding RAM address
 	void AssignPage(int page_num, PCB proc_id);		//assign a page index to a process
 	void FreePage(int page_num, PCB proc_id);		//free a given page index for other use
+	void ResolveFaults();
 
 private:
 	std::vector<int> free_frames;	//holds all unassigned frames

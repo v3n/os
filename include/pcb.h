@@ -53,5 +53,5 @@ typedef struct PCB
 	unsigned int outputBufferSize;
 	WORD startAddress, endAddress, program_counter;	
 	WORD inputBufferBegin, outputBufferBegin;
-	int programSize;
+	WORD programSize;
 } PCB;

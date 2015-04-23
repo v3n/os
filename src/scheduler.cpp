@@ -41,16 +41,33 @@ PCB Scheduler::Dequeue()		//remove and return the job at the front of the readyQ
 
 void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing information in that job's PCB
 {	
-	toLoad.startAddress = *buffer->currentPtr;
-	toLoad.program_counter = toLoad.startAddress;	
-	buffer->allocate(toLoad.programSize);
-	toLoad.endAddress = *buffer->currentPtr;
-	toLoad.state = PROCESS_NEW;
+	WORD *ptrToJob;
+	ptrToJob = (WORD*)ram->allocate(4, true);
+	ptrToJob = &toLoad.startAddress;
+	toLoad.program_counter = toLoad.startAddress;
 
-	toLoad.inputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
-	buffer->allocate(toLoad.inputBufferSize);
-	toLoad.outputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
-	buffer->allocate(toLoad.outputBufferSize);
+	//toLoad.startAddress = *buffer->currentPtr;
+	//toLoad.program_counter = toLoad.startAddress;
+	WORD *ptrToProgramSize;
+	ptrToProgramSize = (WORD*)ram->allocate(4, true);
+	ptrToProgramSize = &toLoad.programSize;
+	//buffer->allocate(toLoad.programSize);
+
+	//toLoad.endAddress = *buffer->currentPtr;
+	toLoad.state = PROCESS_NEW;
+	toLoad.inputBufferBegin = *(ptrToJob);
+	WORD *ptrInputBufferSize;
+	ptrInputBufferSize = (WORD*)ram->allocate(4, true);
+	ptrInputBufferSize = &toLoad.inputBufferSize;
+	//buffer->allocate(toLoad.inputBufferSize);
+	WORD *ptrOutputBufferSize;
+	ptrOutputBufferSize = (WORD*)ram->allocate(4, true);
+	ptrOutputBufferSize = &toLoad.outputBufferSize;
+	//toLoad.outputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
+	WORD *ptrOutputBufferBegin;
+	ptrOutputBufferBegin = (WORD*)ram->allocate(4, true);
+	ptrOutputBufferBegin = &toLoad.outputBufferBegin;
+	//buffer->allocate(toLoad.outputBufferSize);
 	//jobs[toLoad.jobID] = toLoad;
 
 	Enqueue(toLoad);
@@ -59,12 +76,12 @@ void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing 
 void Scheduler::LoadJobs()	//general method to call LoadToRAM until RAM is full or all jobs are loaded
 {
 	#define RAM_SIZE 256		//stubbed in until RAM is re-vamped, then can be changed...
-	while (buffer->currentPtr < (WORD*)RAM_SIZE && next_job < JOB_LIM)
-	{
-		File* next = drive->findFile(next_job);
-		//LoadToRAM((PCB)next);		//this won't work for the time being, but that's the general idea...
-		next_job++;
-	}
+	//while (buffer->currentPtr < (WORD*)RAM_SIZE && next_job < JOB_LIM)
+	//{
+	//	File* next = drive->findFile(next_job);
+	//	//LoadToRAM((PCB)next);		//this won't work for the time being, but that's the general idea...
+	//	next_job++;
+	//}
 }
 
 void Scheduler::Swap(PCB x, PCB y)	//utility method to swap two items

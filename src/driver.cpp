@@ -34,7 +34,7 @@ int main(int argc, char const *argv[])
 		// std::cout << "Execution Time " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()<<'\n';
     }
 
-    RAM *ram = new RAM();
+	Ram ram;
 
 	return 0;
 }

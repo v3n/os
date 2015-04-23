@@ -16,7 +16,7 @@
 class Scheduler
 {
 private:
-	RAM *buffer;	
+	Ram *ram;	
 	HDD *drive;
 	unsigned int next_job;
 	std::vector<PCB> readyQueue;	

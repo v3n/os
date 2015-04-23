@@ -11,6 +11,7 @@
 Scheduler::Scheduler()
 {
 	std::vector<PCB> nextQueue;
+	next_job = 0;
 	//readyQueue.push_back(nextQueue);
 }
 
@@ -57,8 +58,13 @@ void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing 
 
 void Scheduler::LoadJobs()	//general method to call LoadToRAM until RAM is full or all jobs are loaded
 {
-	//while room for jobs in RAM AND readyqueue not full
-	//LoadToRAM(PCB of next job)
+	#define RAM_SIZE 256		//stubbed in until RAM is re-vamped, then can be changed...
+	while (buffer->currentPtr < (WORD*)RAM_SIZE && next_job < JOB_LIM)
+	{
+		File* next = drive->findFile(next_job);
+		//LoadToRAM((PCB)next);		//this won't work for the time being, but that's the general idea...
+		next_job++;
+	}
 }
 
 void Scheduler::Swap(PCB x, PCB y)	//utility method to swap two items
@@ -68,7 +74,7 @@ void Scheduler::Swap(PCB x, PCB y)	//utility method to swap two items
 	y = tmp;
 }
 
-void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)	//sorts readyQueue by priority - uses in-place quicksort
+void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)	//sorts readyQueue by jobPriority - uses in-place quicksort
 {		
 	int i = left;
 	int j = right;

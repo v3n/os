@@ -4,7 +4,7 @@ PageTable::PageTable()
 {
 	for (int i = 0; i < TABLE_SIZE; i++)
 	{
-		free_frames.push_back(page_table[i]);	//initialise all page indices as free frames
+		free_frames.push_back(page_table[i]);			//initialise all page indices as free frames
 	}
 }
 PageTable::~PageTable()
@@ -23,12 +23,12 @@ void PageTable::AssignPage(int page_num, PCB proc_id)
 		index++;
 	}
 
-	proc_table[page_num] = proc_id.jobID;		//mark given page index as held by given process
+	proc_table[page_num] = proc_id.jobID;			//mark given page index as held by given process
 }
 
 void PageTable::FreePage(int page_num, PCB proc_id)
 {
-	free_frames.push_back(page_num);		//add page num to the free frame list
+	free_frames.push_back(page_num);				//add page num to the free frame list
 }
 
 WORD* PageTable::LookupPage(int index, int offset)	//return RAM location based on index/offset of pagetable

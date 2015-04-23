@@ -9,11 +9,16 @@
 #include "utils.h"
 #include "pcb.h"
 #include "ram.h"
+#include "hdd.h"
+
+#define JOB_LIM 30	//max # of jobs in program file
 
 class Scheduler
 {
 private:
 	RAM *buffer;	
+	HDD *drive;
+	unsigned int next_job;
 	std::vector<PCB> readyQueue;	
 	void Swap(PCB x, PCB y);
 	void SortQueue(std::vector<PCB> &toSort, int left, int right);	

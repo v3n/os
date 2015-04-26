@@ -8,9 +8,10 @@
 #include "utils.h"
 #include "scheduler.h"
 
-Scheduler::Scheduler()
+Scheduler::Scheduler(SchedulerMode mode)
 {
 	std::vector<PCB> nextQueue;
+	scheduler_mode = mode;
 	next_job = 0;
 	//readyQueue.push_back(nextQueue);
 }
@@ -19,10 +20,22 @@ Scheduler::~Scheduler()
 {
 }
 
-void Scheduler::Enqueue(PCB next)	//insert a job into the readyQueue and re-sort
+void Scheduler::Enqueue(PCB next)	//insert a job into the readyQueue and re-sort based on scheduling policy
 {
 	readyQueue.push_back(next);
-	SortQueue(readyQueue, 0, readyQueue.size() - 1);
+	switch (scheduler_mode)
+	{
+	case Priority:
+		SortQueue(readyQueue, 0, readyQueue.size() - 1);
+		break;
+	case SJF:
+		SJFSortQueue(readyQueue, 0, readyQueue.size() - 1);
+		break;
+	case FIFO:
+		FIFOSortQueue(readyQueue);
+		break;
+	}
+	
 }
 
 PCB *Scheduler::Peek()			//return the job at the front of the readyQueue
@@ -41,7 +54,6 @@ PCB Scheduler::Dequeue()		//remove and return the job at the front of the readyQ
 
 void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing information in that job's PCB
 {	
-<<<<<<< HEAD
 	WORD *ptrToJob;
 	ptrToJob = (WORD*)ram->allocate(4, true);
 	ptrToJob = &toLoad.startAddress;
@@ -53,13 +65,11 @@ void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing 
 	ptrToProgramSize = (WORD*)ram->allocate(4, true);
 	ptrToProgramSize = &toLoad.programSize;
 	//buffer->allocate(toLoad.programSize);
-=======
-	toLoad.startAddress = *buffer->currentPtr;		//with paged memory, this will all have to change...
-	toLoad.program_counter = toLoad.startAddress;	
-	buffer->allocate(toLoad.programSize);
-	toLoad.endAddress = *buffer->currentPtr;
-	toLoad.state = PROCESS_NEW;
->>>>>>> Various tweaks, twerks, and otherwise...
+	//toLoad.startAddress = *buffer->currentPtr;		
+	//toLoad.program_counter = toLoad.startAddress;	
+	//buffer->allocate(toLoad.programSize);
+	//toLoad.endAddress = *buffer->currentPtr;
+	//toLoad.state = PROCESS_NEW;
 
 	//toLoad.endAddress = *buffer->currentPtr;
 	toLoad.state = PROCESS_NEW;
@@ -130,4 +140,42 @@ void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)	//sorts
 	{
 		SortQueue(toSort, i, right);
 	}
+}
+
+void Scheduler::SJFSortQueue(std::vector<PCB> &toSort, int left, int right)		//essentially identical to SortQueue, but based on job size instead...
+{
+	int i = left;
+	int j = right;
+	int pivot = ((left + right) / 2);
+
+	while (i <= j)
+	{
+		while (toSort[i].jobSize < toSort[pivot].jobSize)
+		{
+			i++;
+		}
+		while (toSort[j].jobSize > toSort[pivot].jobSize)
+		{
+			j--;
+		}
+		if (i <= j)
+		{
+			Swap(toSort[i], toSort[j]);
+			i++;
+			j--;
+		}
+	}
+	if (left < j)
+	{
+		SJFSortQueue(toSort, left, j);
+	}
+	if (i > right)
+	{
+		SJFSortQueue(toSort, i, right);
+	}
+}
+
+void Scheduler::FIFOSortQueue(std::vector<PCB> &toSort)
+{
+	//does this, strictly speaking, need to do anything?
 }

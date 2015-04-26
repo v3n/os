@@ -48,6 +48,7 @@ typedef struct PCB
 	ProcessStatus state;
 	CPUState cpuState;
 	unsigned int jobPriority;
+	unsigned int jobSize;
 	unsigned int jobID;
 	unsigned int inputBufferSize;
 	unsigned int outputBufferSize;

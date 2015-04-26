@@ -22,18 +22,22 @@ private:
 	PageTable *p_table;
 
 	unsigned int next_job;
-	std::vector<PCB> readyQueue;	
+	std::vector<PCB> readyQueue;		
 	void Swap(PCB x, PCB y);
 	void SortQueue(std::vector<PCB> &toSort, int left, int right);	
+	void SJFSortQueue(std::vector<PCB> &toSort, int left, int right);
+	void FIFOSortQueue(std::vector<PCB> &toSort);
 	void LoadToRAM(PCB toLoad);		
 	void LoadJobs();
 
 public:
+	enum SchedulerMode {Priority, SJF, FIFO};
+	SchedulerMode scheduler_mode;
 	std::map<int, PCB> jobs;
 	void Enqueue(PCB next);
 	PCB *Peek();	
 	PCB Dequeue();	
-	Scheduler();
+	Scheduler(SchedulerMode mode);
 	Scheduler(int numCores);
 	~Scheduler();
 };

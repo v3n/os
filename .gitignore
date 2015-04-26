@@ -65,3 +65,6 @@ Premake4.tmproj
 *.exe
 *.out
 *.app
+
+# Boost (don't redist)
+include/boost

@@ -8,11 +8,11 @@
 #include "cpu.h"
 #include "opcodes.h"
 
-#ifdef R
-#undef R
+#ifdef REG
+#undef REG
 #endif
 /* Access register of this CPU */
-#define R(x) (*((WORD *)this + x))
+#define REG(x) (*((WORD *)this + x))
 
 #define EXTRACT_OPCODE(x)   (0x3F000000 & x) >> 24
 
@@ -58,21 +58,21 @@ void * CPU::decode()
             CPU_BREAK_CASE
         /* Register       */
         CPU_DECODE_CASE(MOV,  Immediate)
-            R(instruction.d_reg) = R(instruction.b_reg); CPU_BREAK_CASE
+            REG(instruction.d_reg) = REG(instruction.b_reg); CPU_BREAK_CASE
         CPU_DECODE_CASE(ADD,  Arithmatic)
-            R(instruction.d_reg) = R(instruction.s_reg_a) + R(instruction.s_reg_b); CPU_BREAK_CASE
+            REG(instruction.d_reg) = REG(instruction.s_reg_a) + REG(instruction.s_reg_b); CPU_BREAK_CASE
         CPU_DECODE_CASE(SUB,  Arithmatic)
-            R(instruction.d_reg) = R(instruction.s_reg_a) - R(instruction.s_reg_b); CPU_BREAK_CASE
+            REG(instruction.d_reg) = REG(instruction.s_reg_a) - REG(instruction.s_reg_b); CPU_BREAK_CASE
         CPU_DECODE_CASE(MUL,  Arithmatic)
-            R(instruction.d_reg) = R(instruction.s_reg_a) * R(instruction.s_reg_b); CPU_BREAK_CASE
+            REG(instruction.d_reg) = REG(instruction.s_reg_a) * REG(instruction.s_reg_b); CPU_BREAK_CASE
         CPU_DECODE_CASE(DIV,  Arithmatic)
-            R(instruction.d_reg) = R(instruction.s_reg_a) / R(instruction.s_reg_b); CPU_BREAK_CASE
+            REG(instruction.d_reg) = REG(instruction.s_reg_a) / REG(instruction.s_reg_b); CPU_BREAK_CASE
         CPU_DECODE_CASE(AND,  Arithmatic)
-            R(instruction.d_reg) = R(instruction.s_reg_a) & R(instruction.s_reg_b); CPU_BREAK_CASE
+            REG(instruction.d_reg) = REG(instruction.s_reg_a) & REG(instruction.s_reg_b); CPU_BREAK_CASE
         CPU_DECODE_CASE(OR,   Arithmatic)
-            R(instruction.d_reg) = R(instruction.s_reg_a) | R(instruction.s_reg_b); CPU_BREAK_CASE
+            REG(instruction.d_reg) = REG(instruction.s_reg_a) | REG(instruction.s_reg_b); CPU_BREAK_CASE
         CPU_DECODE_CASE(SLT,  Arithmatic)
-            R(instruction.d_reg) = (R(instruction.s_reg_a) < R(instruction.s_reg_b)) ? 1 : 0; CPU_BREAK_CASE
+            REG(instruction.d_reg) = (REG(instruction.s_reg_a) < REG(instruction.s_reg_b)) ? 1 : 0; CPU_BREAK_CASE
         /* Immediate      */
         CPU_DECODE_CASE(ST,   Register)
             CPU_BREAK_CASE

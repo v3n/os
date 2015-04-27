@@ -18,4 +18,4 @@
 typedef std::uint32_t WORD;
 
 /* Register definitions */
-#define R(cpu,x) ((WORD *)cpu + x) /* Access register of specific CPU */
+#define REG(cpu,x) ((WORD *)cpu + x) /* Access register of specific CPU */

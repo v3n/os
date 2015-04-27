@@ -6,6 +6,14 @@
 #include "utils.h"
 #include "pcb.h"
 
+#include <boost/thread.hpp>
+
+enum CPU_STATE {
+    CPU_WORKING,
+    CPU_IDLE,
+    CPU_IO
+};
+
 class CPU
 {
 private:

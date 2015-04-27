@@ -23,7 +23,7 @@ void CPU::runloop()
     for ( ; ; )
     {
         /* block thread until we're assigned a program */
-        cv.wait(mutex, [this] { return ReadyState == CPU_WORKING; } );
+        cv.wait(lock, [this] { return ReadyState == CPU_WORKING; } );
 
         /* @TODO: chrono here */
         while ( ReadyState == CPU_WORKING )
@@ -41,6 +41,7 @@ CPU::CPU()
     ReadyState = CPU_IDLE;
 
     /* set up our 'core' */
+    lock = boost::unique_lock<boost::mutex>( mutex );
     thread = boost::thread(boost::bind( &CPU::runloop, this ));
 }
 

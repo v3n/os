@@ -22,8 +22,9 @@ private:
     unsigned int ReadyState;
 
     boost::thread thread;
+    boost::mutex mutex;
     boost::condition_variable cv;
-    boost::unique_lock<boost::mutex> mutex;
+    boost::unique_lock<boost::mutex> lock;
 
     void idle();
 

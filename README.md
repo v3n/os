@@ -7,4 +7,5 @@ This is the final project for SPSU's CS 3243. The task was to build an operating
 ###### Dependencies:
 
 * Premake 4.4b
+* Boost 1.55
 * Google Test 1.7 (included)

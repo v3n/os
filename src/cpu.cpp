@@ -104,6 +104,7 @@ void * CPU::decode()
             CPU_BREAK_CASE
         /* Flow           */
         CPU_DECODE_CASE(HLT,  Flow)
+            ReadyState = CPU_IDLE;
             CPU_BREAK_CASE
         CPU_DECODE_CASE(NOP,  Flow)
             CPU_BREAK_CASE

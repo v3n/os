@@ -19,6 +19,16 @@ class CPU
 private:
     /* register memory in hardware, simluating hardware cache */ 
     CPUState state;
+    unsigned int ReadyState;
+
+    boost::thread thread;
+    boost::condition_variable cv;
+    boost::unique_lock<boost::mutex> mutex;
+
+    void idle();
+
+    /* boost::thread requires a callable object */
+    void runloop();
 
 public:
     CPU();

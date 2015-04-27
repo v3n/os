@@ -5,6 +5,8 @@
 
 #include <cstring>
 
+#include <boost/bind.hpp>
+
 #include "cpu.h"
 #include "opcodes.h"
 
@@ -16,10 +18,20 @@
 
 #define EXTRACT_OPCODE(x)   (0x3F000000 & x) >> 24
 
+void CPU::runloop()
+{
+    
+}
+
 CPU::CPU()
 {
-    // zero-initiliaze struct
+    /* zero-initialize struct */
     state = {};
+    ReadyState = CPU_IDLE;
+
+
+    /* set up our 'core' thread */
+    thread = boost::thread(boost::bind( &CPU::runloop, this ));
 }
 
 CPU::~CPU()

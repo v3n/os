@@ -21,6 +21,6 @@ TEST(OpCode, IsCorrectSize)
 TEST(CPU_Fetch, InitializesToNULL)
 {
     CPU * cpu = new CPU();
-    ASSERT_EQ(*R(cpu, -2), NULL);
+    ASSERT_EQ(*REG(cpu, -2), NULL);
 }
 

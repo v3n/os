@@ -20,7 +20,18 @@
 
 void CPU::runloop()
 {
-    
+    for ( ; ; )
+    {
+        /* block thread until we're assigned a program */
+        cv.wait(mutex, [this] { return ReadyState == CPU_WORKING; } );
+
+        /* @TODO: chrono here */
+        while ( ReadyState == CPU_WORKING )
+        {
+            fetch(state.data + state.program_counter);
+            decode();
+        }
+    }
 }
 
 CPU::CPU()
@@ -29,8 +40,7 @@ CPU::CPU()
     state = {};
     ReadyState = CPU_IDLE;
 
-
-    /* set up our 'core' thread */
+    /* set up our 'core' */
     thread = boost::thread(boost::bind( &CPU::runloop, this ));
 }
 
@@ -135,4 +145,3 @@ void * CPU::decode()
 
 #undef CPU_DECODE_CASE
 #undef CPU_BREAK_CASE
-

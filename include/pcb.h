@@ -12,6 +12,7 @@ typedef struct CPUState
     WORD instruction;
     WORD program_counter;
     WORD registers[16];
+    WORD * data;
 } CPUState;
 
 typedef struct SchedulerState

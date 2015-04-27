@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int main(int argc, char const *argv[])
+int main(int, char const **)
 {
     HDD *hdd = new HDD();
 #ifdef __APPLE__

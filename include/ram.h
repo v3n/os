@@ -1,6 +1,6 @@
 //EMB
 #pragma once
-#include <malloc.h>
+#include <cstdlib>
 #include <iostream>
 class Ram{
 public:

@@ -5,6 +5,10 @@ Dispatcher::Dispatcher()
 {
 	next_process = nullptr;
 }
+Dispatcher::Dispatcher(Scheduler *s)
+{
+	long_term = s;
+}
 Dispatcher::~Dispatcher()
 {
 }

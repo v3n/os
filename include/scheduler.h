@@ -38,6 +38,7 @@ public:
 	PCB *Peek();	
 	PCB Dequeue();	
 	Scheduler(SchedulerMode mode);
+	Scheduler(PageTable *p, HDD *h);
 	Scheduler(int numCores);
 	~Scheduler();
 };

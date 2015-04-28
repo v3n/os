@@ -22,6 +22,7 @@ Ram::Ram(unsigned long blockNum, unsigned long blockSize) :memBlock(NULL), alloc
 			freeMemBlockLL = currentBlock;
 		}
 	}
+	addresses = new WORD[1024];
 }
 Ram::~Ram(){
 	::free(memBlock);
@@ -47,6 +48,31 @@ void *Ram::allocate(unsigned long size, bool useMemPool){
 	}
 	allocatedMemBlockLL = pCurUnit;
 	return (void *)((char *)pCurUnit + sizeof(LinkedList));
+}
+
+void *Ram::allocate(unsigned long size, int location, PCB process, bool useMemPool)		//modified allocate method that adds the jam to the LinkedList and also in the addresses array
+{
+	if (size > memBlockSize || false == useMemPool || NULL == memBlock || NULL == freeMemBlockLL){
+		return malloc(size);
+	}
+
+	LinkedList *pCurUnit = freeMemBlockLL;
+	freeMemBlockLL = pCurUnit->next;
+	if (NULL != freeMemBlockLL)
+	{
+		freeMemBlockLL->prev = NULL;
+	}
+
+	pCurUnit->next = allocatedMemBlockLL;
+
+	if (NULL != allocatedMemBlockLL)
+	{
+		allocatedMemBlockLL->prev = pCurUnit;
+	}
+	allocatedMemBlockLL = pCurUnit;
+	return (void *)((char *)pCurUnit + sizeof(LinkedList));
+
+
 }
 
 void Ram::free(void *p){

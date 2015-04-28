@@ -11,6 +11,7 @@ class PageTable
 {
 public:
 	PageTable();
+	PageTable(Ram *r);
 	~PageTable();
 
 	WORD* LookupPage(int index, int offset);		//search table and return corresponding RAM address

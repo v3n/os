@@ -8,6 +8,7 @@ class Dispatcher
 {
 public:
 	Dispatcher();
+	Dispatcher(Scheduler *s);
 	~Dispatcher();
 	PCB *next_process;
 	Scheduler *long_term;

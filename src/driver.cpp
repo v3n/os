@@ -6,6 +6,8 @@
 #include "hdd.h"
 #include "cpu.h"
 #include "ram.h"
+#include "scheduler.h"
+#include "pageTable.h"
 
 using namespace std;
 
@@ -18,7 +20,7 @@ int main(int, char const **)
 	Loader *l = new Loader("..\\OSProj\\spec\\Program-File.txt", hdd);
 #endif
 
-    CPU *cpu = new CPU();
+    CPU *cpu = new CPU();	
 
     File * file = hdd->findFile(1);
     WORD * programData = (WORD *)&(*(file+1));
@@ -34,7 +36,9 @@ int main(int, char const **)
 		// std::cout << "Execution Time " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()<<'\n';
     }
 
-	Ram ram;
+	Ram *ram;
+	PageTable *page_table = new PageTable(ram);
+	Scheduler *long_term = new Scheduler(page_table, hdd);
 
 	return 0;
 }

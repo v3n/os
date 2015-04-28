@@ -7,6 +7,10 @@ PageTable::PageTable()
 		free_frames.push_back(page_table[i]);			//initialise all page indices as free frames
 	}
 }
+PageTable::PageTable(Ram *r)
+{
+	ram = r;
+}
 PageTable::~PageTable()
 {
 }

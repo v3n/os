@@ -1,6 +1,8 @@
 //EMB
 #pragma once
 #include <cstdlib>
+#include "utils.h"
+#include "pcb.h"
 #include <iostream>
 class Ram{
 public:
@@ -8,7 +10,9 @@ public:
 	~Ram();
 
 	void *allocate(unsigned long size, bool useMemPool = true);
+	void *allocate(unsigned long size, int location, PCB process, bool useMemPool = true);
 	void free(void *p);
+	WORD *addresses;
 
 private:
 	struct LinkedList{

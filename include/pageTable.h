@@ -4,7 +4,7 @@
 #include "ram.h"
 #include <vector>
 
-#define TABLE_SIZE 256				//designated # of pages in table (1024 / 4)
+#define TABLE_SIZE 30				//designated # of pages in table (1024 / 4)
 #define PAGE_SIZE 4					//specify size of a given page
 
 class PageTable
@@ -15,6 +15,7 @@ public:
 	~PageTable();
 
 	WORD* LookupPage(int index, int offset);		//search table and return corresponding RAM address
+	PCB* LookupProcess(int index);
 	void AssignPage(PCB proc_id);					//assign a page index to a process
 	void FreePage(int page_num, PCB proc_id);		//free a given page index for other use
 	void ResolveFaults(PCB proc);

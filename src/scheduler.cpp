@@ -51,10 +51,25 @@ PCB Scheduler::Dequeue()		//remove and return the job at the front of the readyQ
 {	
 	PCB result = readyQueue.back();
 	readyQueue.erase(readyQueue.end());
-	SortQueue(readyQueue, 0, readyQueue.size() - 1);
+	switch (scheduler_mode)
+	{
+	case Priority:
+		SortQueue(readyQueue, 0, readyQueue.size() - 1);
+		break;
+	case SJF:
+		SJFSortQueue(readyQueue, 0, readyQueue.size() - 1);
+		break;
+	case FIFO:
+		FIFOSortQueue(readyQueue);
+		break;
+	}
 	return result;
 }
 
+void Scheduler::SetSchedulingMode(SchedulerMode mode)
+{
+	scheduler_mode = mode;
+}
 
 void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing information in that job's PCB
 {	

@@ -37,6 +37,7 @@ public:
 	void Enqueue(PCB next);
 	PCB *Peek();	
 	PCB Dequeue();	
+	void SetSchedulingMode(SchedulerMode mode);
 	Scheduler(SchedulerMode mode);
 	Scheduler(PageTable *p, HDD *h);
 	Scheduler(int numCores);

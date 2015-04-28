@@ -29,8 +29,10 @@ void PageTable::AssignPage(PCB proc_id)
 		index++;
 	}
 
-	proc_table[free_page] = proc_id.jobID;			//mark given page index as held by given process
-	ram->allocate(PAGE_SIZE, true);					//allocate given page?
+	proc_table[free_page] = proc_id.jobID;					//mark given page index as held by given process
+	proc_id.page_index = free_page;	
+	ram->allocate(PAGE_SIZE, free_page, proc_id, true);		//allocate given page?
+
 }
 
 void PageTable::FreePage(int page_num, PCB proc_id)
@@ -45,6 +47,12 @@ WORD* PageTable::LookupPage(int index, int offset)	//return RAM location based o
 	//needs work...
 	WORD* tmp;	//brief stub so build works...
 	return tmp;
+}
+
+PCB* PageTable::LookupProcess(int index)		//return process information based on table index
+{
+	PCB *proc_location = &ram->processes[index];
+	return proc_location;
 }
 
 void PageTable::ResolveFaults(PCB proc)		//called by CPU on current process when a fault is reached...

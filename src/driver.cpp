@@ -8,6 +8,7 @@
 #include "ram.h"
 #include "scheduler.h"
 #include "pageTable.h"
+#include "dispatcher.h"
 
 using namespace std;
 
@@ -39,6 +40,7 @@ int main(int, char const **)
 	Ram *ram;
 	PageTable *page_table = new PageTable(ram);
 	Scheduler *long_term = new Scheduler(page_table, hdd);
+	Dispatcher *short_term = new Dispatcher(long_term);
 
 	return 0;
 }

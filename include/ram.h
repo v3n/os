@@ -13,6 +13,7 @@ public:
 	void *allocate(unsigned long size, int location, PCB process, bool useMemPool = true);
 	void free(void *p);
 	WORD *addresses;
+	PCB *processes;		//to be used for temporary statistic measures...
 
 private:
 	struct LinkedList{

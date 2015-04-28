@@ -10,7 +10,7 @@ public:
 	Dispatcher();
 	Dispatcher(Scheduler *s);
 	~Dispatcher();
-	PCB *next_process;
+	PCB next_process;
 	Scheduler *long_term;
 
 	WORD * GetInstruction(PCB nextInstr);

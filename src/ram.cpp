@@ -23,6 +23,7 @@ Ram::Ram(unsigned long blockNum, unsigned long blockSize) :memBlock(NULL), alloc
 		}
 	}
 	addresses = new WORD[1024];
+	processes = new PCB[30];
 }
 Ram::~Ram(){
 	::free(memBlock);
@@ -72,7 +73,7 @@ void *Ram::allocate(unsigned long size, int location, PCB process, bool useMemPo
 	allocatedMemBlockLL = pCurUnit;
 	return (void *)((char *)pCurUnit + sizeof(LinkedList));
 
-
+	processes[location] = process;		//saves temporary PCB information
 }
 
 void Ram::free(void *p){

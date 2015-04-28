@@ -53,6 +53,7 @@ typedef struct PCB
 	unsigned int jobID;
 	unsigned int inputBufferSize;
 	unsigned int outputBufferSize;
+	unsigned int page_index;
 	WORD startAddress, endAddress, program_counter;	
 	WORD inputBufferBegin, outputBufferBegin;
 	WORD programSize;

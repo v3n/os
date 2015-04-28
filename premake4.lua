@@ -43,7 +43,7 @@ solution "os"
     defines       { "__FOR_TESTS=1" }
 
     libdirs       { "lib/boost" }
-    links         { "boost_system", "boost_thread" }
+    links         { "boost_system", "boost_thread", "boost_chrono" }
 
     configuration "gmake"
       buildoptions { "-std=c++11" }
@@ -56,7 +56,7 @@ solution "os"
     includedirs   { "include/" }
     flags         { "ExtraWarnings" }
     libdirs       { "lib/boost" }
-    links         { "boost_system", "boost_thread" }
+    links         { "boost_system", "boost_thread", "boost_chrono" }
 
     configuration "gmake"
       buildoptions { "-std=c++11" }

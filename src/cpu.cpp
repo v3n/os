@@ -5,13 +5,7 @@
 
 #include <cstring>
 
-
-#ifdef __APPLE__
 #include <boost/bind.hpp>
-#elif _WIN32
-#include <boost\bind.hpp>
-#endif
-
 
 #include "cpu.h"
 #include "opcodes.h"

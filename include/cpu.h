@@ -6,12 +6,7 @@
 #include "utils.h"
 #include "pcb.h"
 
-
-#ifdef __APPLE__
 #include <boost/thread.hpp>
-#elif _WIN32
-#include <boost\thread.hpp>
-#endif
 
 enum CPU_STATE {
     CPU_WORKING,

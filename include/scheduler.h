@@ -9,7 +9,7 @@
 #include "utils.h"
 #include "pageTable.h"
 #include "pcb.h"
-#include "ram.h"
+//#include "ram.h"
 #include "hdd.h"
 
 #define JOB_LIM 30	//max # of jobs in program file
@@ -17,7 +17,7 @@
 class Scheduler
 {
 private:
-	Ram *ram;	
+	//Ram *ram;	
 	HDD *drive;
 	PageTable *p_table;
 

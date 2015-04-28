@@ -5,7 +5,6 @@
 
 #include <map>
 
-#include "utils.h"
 #include "scheduler.h"
 
 Scheduler::Scheduler(SchedulerMode mode)
@@ -87,6 +86,7 @@ void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing 
 	ptrOutputBufferBegin = &toLoad.outputBufferBegin;
 	//buffer->allocate(toLoad.outputBufferSize);
 	//jobs[toLoad.jobID] = toLoad;
+	p_table->AssignPage(toLoad);	//maybe move all the above logic into the PageTable class?
 
 	Enqueue(toLoad);
 }

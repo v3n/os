@@ -5,12 +5,15 @@ Dispatcher::Dispatcher()
 {
 	//next_process = nullptr;
 }
+
 Dispatcher::Dispatcher(Scheduler *s)
 {
 	long_term = s;
 }
+
 Dispatcher::~Dispatcher()
 {
+    
 }
 
 PCB Dispatcher::GetProcessInfo(int pID)	//returns PCB info based on given job ID

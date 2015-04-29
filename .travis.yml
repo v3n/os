@@ -53,7 +53,7 @@ before_script:
     - ./bootstrap.sh --help
     # We only need thread (and also only header-only).
     # All the rest takes way too much time to compile.
-    - sudo ./bootstrap.sh --with-libraries="thread,chrono"
+    - sudo ./bootstrap.sh --with-libraries="thread,chrono,program_options"
     # Way too much output, so just display the last 50 lines.
     - sudo ./b2 install | tail -n 50
     - cd ..

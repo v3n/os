@@ -42,7 +42,7 @@ void Scheduler::Enqueue(PCB next)	//insert a job into the readyQueue and re-sort
 	
 }
 
-PCB *Scheduler::Peek()			//return the job at the front of the readyQueue
+PCB * Scheduler::Peek()			//return the job at the front of the readyQueue
 {	
 	return &readyQueue.back();
 }
@@ -50,7 +50,7 @@ PCB *Scheduler::Peek()			//return the job at the front of the readyQueue
 PCB Scheduler::Dequeue()		//remove and return the job at the front of the readyQueue
 {	
 	PCB result = readyQueue.back();
-	readyQueue.erase(readyQueue.end());
+	readyQueue.pop_back();
 	switch (scheduler_mode)
 	{
 	case POLICY_Priority:

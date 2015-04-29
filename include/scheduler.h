@@ -28,16 +28,18 @@ private:
 	void SJFSortQueue(std::vector<PCB> &toSort, int left, int right);
 	void FIFOSortQueue(std::vector<PCB> &toSort);
 	void LoadToRAM(PCB toLoad);		
-	void LoadJobs();
 
 public:
 	enum SchedulerMode { POLICY_Priority, POLICY_SJF, POLICY_FIFO };
 	SchedulerMode scheduler_mode;
 	std::map<int, PCB> jobs;
 	void Enqueue(PCB next);
+	void LoadJobs();	
 	PCB *Peek();	
 	PCB Dequeue();	
 	void SetSchedulingMode(SchedulerMode mode);
+
+
 	Scheduler(SchedulerMode mode);
 	Scheduler(PageTable *p, HDD *h);
 	Scheduler(int numCores);

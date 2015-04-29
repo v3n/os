@@ -21,8 +21,8 @@ public:
 	void ResolveFaults(PCB proc);
 
 private:
-	Ram *ram;
-	std::vector<int> free_frames;	//holds all unassigned frames
+	Ram * ram;
+	std::vector<int> * free_frames;	//holds all unassigned frames
 	int page_table[TABLE_SIZE];		//holds the page indices
 	int proc_table[TABLE_SIZE];		//holds the process_ID of each assigned page
 };

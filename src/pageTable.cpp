@@ -2,29 +2,32 @@
 
 PageTable::PageTable()
 {
+	free_frames = new std::vector<int>(TABLE_SIZE);
 	for (int i = 0; i < TABLE_SIZE; i++)
 	{
-		free_frames.push_back(page_table[i]);			//initialise all page indices as free frames
+		free_frames->at(i) = (page_table[i]);			//initialise all page indices as free frames
 	}
 }
-PageTable::PageTable(Ram *r)
+PageTable::PageTable(Ram *r) : PageTable()
 {
+    
 	ram = r;
 }
+
 PageTable::~PageTable()
 {
 }
 
 void PageTable::AssignPage(PCB proc_id)
 {
-	int free_page = free_frames[rand() % free_frames.size()];	//select randomly from free_frames for now...
+	int free_page = rand() % free_frames->size();	//select randomly from free_frames for now...
 
-	std::vector<int>::iterator index = free_frames.begin();		//remove given page number from the free_frame list
-	while (index != free_frames.end())
+	std::vector<int>::iterator index = free_frames->begin();		//remove given page number from the free_frame list
+	while (index != free_frames->end())
 	{
 		if (*index == free_page)
 		{
-			free_frames.erase(index);
+			free_frames->erase(index);
 		}
 		index++;
 	}
@@ -37,7 +40,7 @@ void PageTable::AssignPage(PCB proc_id)
 
 void PageTable::FreePage(int page_num, PCB proc_id)
 {
-	free_frames.push_back(page_num);				//add page num to the free frame list
+	free_frames->push_back(page_num);				//add page num to the free frame list
 }
 
 WORD* PageTable::LookupPage(int index, int offset)	//return RAM location based on index/offset of pagetable - need some way to index RAM...
@@ -54,7 +57,7 @@ PCB* PageTable::LookupProcess(int index)		//return process information based on 
 
 void PageTable::ResolveFaults(PCB proc)		//called by CPU on current process when a fault is reached...
 {
-	if (!free_frames.empty())		
+	if (!free_frames->empty())		
 	{
 		AssignPage(proc);
 	}

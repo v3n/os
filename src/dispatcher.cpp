@@ -31,7 +31,8 @@ WORD * Dispatcher::GetInstruction(PCB nextInst)		//returns the instruction point
 
 void Dispatcher::GetNextProcess()		//returns the next process in the readyQueue
 {
-	next_process = long_term->Dequeue();
+	next_process = *long_term->Peek();
+    long_term->Dequeue();
 }
 
 void Dispatcher::SetCPUParameters(PCB instr)		//ideally, sets CPU info before process begins

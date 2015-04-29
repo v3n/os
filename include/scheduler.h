@@ -22,7 +22,7 @@ private:
 	PageTable *p_table;
 
 	unsigned int next_job;
-	std::vector<PCB> readyQueue;		
+	std::vector<PCB> * readyQueue;		
 	void Swap(PCB x, PCB y);
 	void SortQueue(std::vector<PCB> &toSort, int left, int right);	
 	void SJFSortQueue(std::vector<PCB> &toSort, int left, int right);
@@ -35,8 +35,8 @@ public:
 	std::map<int, PCB> jobs;
 	void Enqueue(PCB next);
 	void LoadJobs();	
-	PCB *Peek();	
-	PCB Dequeue();	
+	PCB * Peek();	
+	void Dequeue();	
 	void SetSchedulingMode(SchedulerMode mode);
 
 

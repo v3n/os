@@ -9,15 +9,18 @@
 
 Scheduler::Scheduler(SchedulerMode mode)
 {
-	std::vector<PCB> nextQueue;
 	scheduler_mode = mode;
 	next_job = 0;
+
+	readyQueue = new std::vector<PCB>();
 }
 Scheduler::Scheduler(PageTable *p, HDD *h)
 {
 	p_table = p;
 	drive = h;
 	scheduler_mode = POLICY_FIFO;
+
+	readyQueue = new std::vector<PCB>();
 }
 
 Scheduler::~Scheduler()
@@ -26,17 +29,17 @@ Scheduler::~Scheduler()
 
 void Scheduler::Enqueue(PCB next)	//insert a job into the readyQueue and re-sort based on scheduling policy
 {
-	readyQueue.push_back(next);
+	readyQueue->push_back(next);
 	switch (scheduler_mode)
 	{
 	case POLICY_Priority:
-		SortQueue(readyQueue, 0, readyQueue.size() - 1);
+		SortQueue(*readyQueue, 0, readyQueue->size() - 1);
 		break;
 	case POLICY_SJF:
-		SJFSortQueue(readyQueue, 0, readyQueue.size() - 1);
+		SJFSortQueue(*readyQueue, 0, readyQueue->size() - 1);
 		break;
 	case POLICY_FIFO:
-		FIFOSortQueue(readyQueue);
+		FIFOSortQueue(*readyQueue);
 		break;
 	}
 	
@@ -44,26 +47,30 @@ void Scheduler::Enqueue(PCB next)	//insert a job into the readyQueue and re-sort
 
 PCB * Scheduler::Peek()			//return the job at the front of the readyQueue
 {	
-	return &readyQueue.back();
+	if ( readyQueue->size() == 0 )
+		return nullptr;
+	return &readyQueue->back();
 }
 
-PCB Scheduler::Dequeue()		//remove and return the job at the front of the readyQueue
+void Scheduler::Dequeue()		//remove and return the job at the front of the readyQueue
 {	
-	PCB result = readyQueue.back();
-	readyQueue.pop_back();
+	if ( readyQueue->size() == 0)
+		return;
+
+	PCB result = readyQueue->back();
+	readyQueue->pop_back();
 	switch (scheduler_mode)
 	{
 	case POLICY_Priority:
-		SortQueue(readyQueue, 0, readyQueue.size() - 1);
+		SortQueue(*readyQueue, 0, readyQueue->size() - 1);
 		break;
 	case POLICY_SJF:
-		SJFSortQueue(readyQueue, 0, readyQueue.size() - 1);
+		SJFSortQueue(*readyQueue, 0, readyQueue->size() - 1);
 		break;
 	case POLICY_FIFO:
-		FIFOSortQueue(readyQueue);
+		FIFOSortQueue(*readyQueue);
 		break;
 	}
-	return result;
 }
 
 void Scheduler::SetSchedulingMode(SchedulerMode mode)
@@ -102,7 +109,7 @@ void Scheduler::Swap(PCB x, PCB y)	//utility method to swap two items
 	y = tmp;
 }
 
-void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)	//sorts readyQueue by jobPriority - uses in-place quicksort
+void Scheduler::SortQueue(std::vector<PCB> & toSort, int left, int right)	//sorts readyQueue by jobPriority - uses in-place quicksort
 {		
 	int i = left;
 	int j = right;
@@ -135,7 +142,7 @@ void Scheduler::SortQueue(std::vector<PCB> &toSort, int left, int right)	//sorts
 	}
 }
 
-void Scheduler::SJFSortQueue(std::vector<PCB> &toSort, int left, int right)		//essentially identical to SortQueue, but based on job size instead...
+void Scheduler::SJFSortQueue(std::vector<PCB> & toSort, int left, int right)		//essentially identical to SortQueue, but based on job size instead...
 {
 	int i = left;
 	int j = right;

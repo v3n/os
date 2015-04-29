@@ -80,7 +80,7 @@ void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing 
 
 void Scheduler::LoadJobs()	//general method to call LoadToRAM until RAM is full or all jobs are loaded
 {		
-	for (int i = 0; i < drive->files.size(); i++)
+	for (size_t i = 0; i < drive->files.size(); i++)
 	{
 		File *next_file = drive->findFile(i);
 		PCB next_proc = PCB();
@@ -168,7 +168,7 @@ void Scheduler::SJFSortQueue(std::vector<PCB> &toSort, int left, int right)		//e
 	}
 }
 
-void Scheduler::FIFOSortQueue(std::vector<PCB> &toSort)
+void Scheduler::FIFOSortQueue(std::vector<PCB> &)
 {
 	//does this, strictly speaking, need to do anything?
 }

@@ -28,7 +28,6 @@ WORD * Dispatcher::GetInstruction(PCB nextInst)		//returns the instruction point
 
 void Dispatcher::GetNextProcess()		//returns the next process in the readyQueue
 {
-	//next_process = long_term->Peek();
 	next_process = long_term->Dequeue();
 }
 

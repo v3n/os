@@ -25,11 +25,12 @@ typedef struct File
 {
 private:
 	WORD * buffer;
-    std::vector<File *> files;
+    //std::vector<File *> files;
 
 public:	
 	HDD();
 	~HDD();
+	std::vector<File *> files;
 
     /* Allocate zero'd file */
     void * newFile(size_t);

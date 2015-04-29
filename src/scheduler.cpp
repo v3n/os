@@ -12,7 +12,6 @@ Scheduler::Scheduler(SchedulerMode mode)
 	std::vector<PCB> nextQueue;
 	scheduler_mode = mode;
 	next_job = 0;
-	//readyQueue.push_back(nextQueue);
 }
 Scheduler::Scheduler(PageTable *p, HDD *h)
 {
@@ -72,51 +71,17 @@ void Scheduler::SetSchedulingMode(SchedulerMode mode)
 }
 
 void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing information in that job's PCB
-{	
-	//WORD *ptrToJob;
-	//ptrToJob = (WORD*)ram->allocate(4, true);
-	//ptrToJob = &toLoad.startAddress;
-	//toLoad.program_counter = toLoad.startAddress;
-
-	////toLoad.startAddress = *buffer->currentPtr;
-	////toLoad.program_counter = toLoad.startAddress;
-	//WORD *ptrToProgramSize;
-	//ptrToProgramSize = (WORD*)ram->allocate(4, true);
-	//ptrToProgramSize = &toLoad.programSize;
-	////buffer->allocate(toLoad.programSize);
-	////toLoad.startAddress = *buffer->currentPtr;		
-	////toLoad.program_counter = toLoad.startAddress;	
-	////buffer->allocate(toLoad.programSize);
-	////toLoad.endAddress = *buffer->currentPtr;
-	////toLoad.state = PROCESS_NEW;
-
-	////toLoad.endAddress = *buffer->currentPtr;
-	//toLoad.state = PROCESS_NEW;
-	//toLoad.inputBufferBegin = *(ptrToJob);
-	//WORD *ptrInputBufferSize;
-	//ptrInputBufferSize = (WORD*)ram->allocate(4, true);
-	//ptrInputBufferSize = &toLoad.inputBufferSize;
-	////buffer->allocate(toLoad.inputBufferSize);
-	//WORD *ptrOutputBufferSize;
-	//ptrOutputBufferSize = (WORD*)ram->allocate(4, true);
-	//ptrOutputBufferSize = &toLoad.outputBufferSize;
-	////toLoad.outputBufferBegin = *(buffer->currentPtr + sizeof(WORD));
-	//WORD *ptrOutputBufferBegin;
-	//ptrOutputBufferBegin = (WORD*)ram->allocate(4, true);
-	//ptrOutputBufferBegin = &toLoad.outputBufferBegin;
-	////buffer->allocate(toLoad.outputBufferSize);
-	////jobs[toLoad.jobID] = toLoad;
-	p_table->AssignPage(toLoad);	//maybe move all the above logic into the PageTable class?
+{		
+	p_table->AssignPage(toLoad);	//handles the ram allocation logic
 
 	Enqueue(toLoad);
 }
 
 void Scheduler::LoadJobs()	//general method to call LoadToRAM until RAM is full or all jobs are loaded
-{	
-	unsigned int counter = 0;
-	while (!drive->findFile(counter) == NULL)		//pull all jobs from HDD file vector, convert to PCB values, then load to "ram"
+{		
+	for (int i = 0; i < drive->files.size(); i++)
 	{
-		File *next_file = drive->findFile(counter);
+		File *next_file = drive->findFile(i);
 		PCB next_proc = PCB();
 
 		next_proc.jobID = next_file->id;
@@ -125,7 +90,7 @@ void Scheduler::LoadJobs()	//general method to call LoadToRAM until RAM is full 
 
 		LoadToRAM(next_proc);
 		jobs[next_proc.jobID] = next_proc;			//save PCB info in internal map
-		++counter;
+		
 	}
 }
 

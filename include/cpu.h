@@ -8,6 +8,8 @@
 
 #include <boost/thread.hpp>
 
+#pragma once
+
 enum CPU_STATE {
     CPU_WORKING,
     CPU_IDLE,

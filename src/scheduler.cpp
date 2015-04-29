@@ -17,6 +17,7 @@ Scheduler::Scheduler(PageTable *p, HDD *h)
 {
 	p_table = p;
 	drive = h;
+	scheduler_mode = POLICY_FIFO;
 }
 
 Scheduler::~Scheduler()
@@ -28,13 +29,13 @@ void Scheduler::Enqueue(PCB next)	//insert a job into the readyQueue and re-sort
 	readyQueue.push_back(next);
 	switch (scheduler_mode)
 	{
-	case Priority:
+	case POLICY_Priority:
 		SortQueue(readyQueue, 0, readyQueue.size() - 1);
 		break;
-	case SJF:
+	case POLICY_SJF:
 		SJFSortQueue(readyQueue, 0, readyQueue.size() - 1);
 		break;
-	case FIFO:
+	case POLICY_FIFO:
 		FIFOSortQueue(readyQueue);
 		break;
 	}
@@ -52,13 +53,13 @@ PCB Scheduler::Dequeue()		//remove and return the job at the front of the readyQ
 	readyQueue.erase(readyQueue.end());
 	switch (scheduler_mode)
 	{
-	case Priority:
+	case POLICY_Priority:
 		SortQueue(readyQueue, 0, readyQueue.size() - 1);
 		break;
-	case SJF:
+	case POLICY_SJF:
 		SJFSortQueue(readyQueue, 0, readyQueue.size() - 1);
 		break;
-	case FIFO:
+	case POLICY_FIFO:
 		FIFOSortQueue(readyQueue);
 		break;
 	}

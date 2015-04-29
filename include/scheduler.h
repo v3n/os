@@ -31,7 +31,7 @@ private:
 	void LoadJobs();
 
 public:
-	enum SchedulerMode {Priority, SJF, FIFO};
+	enum SchedulerMode { POLICY_Priority, POLICY_SJF, POLICY_FIFO };
 	SchedulerMode scheduler_mode;
 	std::map<int, PCB> jobs;
 	void Enqueue(PCB next);

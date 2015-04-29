@@ -114,7 +114,7 @@ int main(int argc, char const ** argv)
     }
 
     /* clean up */
-    delete l;
+    // delete l;
     delete hdd;
     delete ram;
     delete page_table;

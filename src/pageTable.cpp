@@ -34,7 +34,9 @@ void PageTable::AssignPage(PCB proc_id)
 
 	proc_table[free_page] = proc_id.jobID;					//mark given page index as held by given process
 	proc_id.page_index = free_page;	
-	ram->allocate(PAGE_SIZE, free_page, proc_id, true);		//allocate given page?
+	void *temp;
+	temp = ram->allocate(PAGE_SIZE, free_page, proc_id, true);		//allocate given page?
+	vecPointerToRam.pusback(temp);
 
 }
 
@@ -43,9 +45,9 @@ void PageTable::FreePage(int page_num, PCB proc_id)
 	free_frames->push_back(page_num);				//add page num to the free frame list
 }
 
-WORD* PageTable::LookupPage(int index, int offset)	//return RAM location based on index/offset of pagetable - need some way to index RAM...
+WORD* PageTable::LookupPage(int index)	//return RAM location based on index
 {
-    return (WORD *)&(free_frames->at(rand() % free_frames->size()));
+    return (WORD*)vecPointerToRam[index];
 }
 
 PCB* PageTable::LookupProcess(int index)		//return process information based on table index

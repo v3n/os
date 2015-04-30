@@ -6,6 +6,8 @@
 #include <cstring>
 
 #include <boost/bind.hpp>
+#include <boost/chrono.hpp>
+#include <iostream>
 
 #include "cpu.h"
 #include "opcodes.h"
@@ -18,21 +20,40 @@
 
 #define EXTRACT_OPCODE(x)   (0x3F000000 & x) >> 24
 
+boost::mutex CPU::m_screen;
+
 void CPU::runloop()
 {
+    boost::chrono::high_resolution_clock::time_point start, stop;
+
     for ( ; ; )
     {
+        start = boost::chrono::high_resolution_clock::now();
         /* block thread until we're assigned a program */
-        cv.wait(lock, [this] { return ReadyState == CPU_WORKING; } );
+        cv.wait(lock, [this] { return *ReadyState == CPU_WORKING; } );
+        stop = boost::chrono::high_resolution_clock::now();
+
+        {
+        boost::mutex::scoped_lock l(m_screen);
+        std::cout << "Wait time:\t" << (stop - start).count() << std::endl;
+        }
 
         /* @TODO: chrono here */
-        while ( ReadyState == CPU_WORKING )
+        // while ( *ReadyState == CPU_WORKING )
+        start = boost::chrono::high_resolution_clock::now();
+        for ( size_t i = 0; i < state.job_size; i++ )
         {
             fetch(state.data + state.program_counter);
             decode();
         }
+        stop = boost::chrono::high_resolution_clock::now();
 
-//        lock.try_lock();
+        {
+        boost::mutex::scoped_lock l(m_screen);
+        std::cout << "Execute time:\t" << (stop - start).count() << std::endl;
+        }
+        
+        *ReadyState = CPU_IDLE;
     }
 }
 
@@ -40,15 +61,19 @@ CPU::CPU()
 {
     /* zero-initialize struct */
     state = {};
-    ReadyState = CPU_IDLE;
+    // ReadyState = CPU_IDLE;
 
     /* set up our 'core' */
     lock = boost::unique_lock<boost::mutex>( mutex );
     thread = boost::thread(boost::bind( &CPU::runloop, this ));
+
+    ReadyState = new CPU_STATE;
+    *ReadyState = CPU_IDLE;
 }
 
 CPU::~CPU()
 {
+    thread.join();
     // delete[] registers;
 }
 
@@ -65,12 +90,15 @@ void CPU::fetch(const WORD * instr)
 
 #define CPU_DECODE_CASE(instr, type) \
     case instr: { \
-        INSTR_##type instruction = *((INSTR_##type *)&(this->state.instruction)); \
-        LOG_INSTR_##type( #instr, instruction);
+        INSTR_##type instruction = *((INSTR_##type *)&(this->state.instruction));
+        //LOG_INSTR_##type( #instr, instruction); 
     
 #define CPU_BREAK_CASE \
     break; \
     }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
 
 void * CPU::decode()
 {
@@ -117,7 +145,7 @@ void * CPU::decode()
             CPU_BREAK_CASE
         /* Flow           */
         CPU_DECODE_CASE(HLT,  Flow)
-            ReadyState = CPU_IDLE;
+            *ReadyState = CPU_IDLE;
             CPU_BREAK_CASE
         CPU_DECODE_CASE(NOP,  Flow)
             CPU_BREAK_CASE
@@ -145,6 +173,8 @@ void * CPU::decode()
     /* auto fail tests for now */
     return nullptr;
 }
+
+#pragma clang diagnostic pop
 
 #undef CPU_DECODE_CASE
 #undef CPU_BREAK_CASE

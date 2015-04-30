@@ -13,6 +13,7 @@ typedef struct CPUState
     WORD program_counter;
     WORD registers[16];
     WORD * data;
+    unsigned int job_size;
 } CPUState;
 
 typedef struct SchedulerState

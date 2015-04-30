@@ -9,7 +9,8 @@
 
 #if defined(DEBUG) && !__FOR_TESTS
   #include <cstdio>
-  #define DLOG(format, ...) printf("[DEBUG] " format "\n", ##__VA_ARGS__)
+  #define DLOG(format, ...) 
+  // printf("[DEBUG] " format "\n", ##__VA_ARGS__)
 #else
   #define DLOG(...)
 #endif

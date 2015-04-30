@@ -80,7 +80,7 @@ void Scheduler::SetSchedulingMode(SchedulerMode mode)
 
 void Scheduler::LoadToRAM(PCB toLoad)	//copies job to RAM and stores addressing information in that job's PCB
 {		
-	p_table->AssignPage(toLoad);	//handles the ram allocation logic
+	// p_table->AssignPage(toLoad);	//handles the ram allocation logic
 
 	Enqueue(toLoad);
 }

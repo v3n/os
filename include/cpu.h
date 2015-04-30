@@ -25,10 +25,12 @@ private:
     void runloop();
 
 public:
+    static boost::mutex m_screen;
+
     /* register memory in hardware, simluating hardware cache */ 
     CPUState state;
-    
-    CPU_STATE ReadyState;
+
+    CPU_STATE * ReadyState;
 
     boost::thread thread;
     boost::mutex mutex;

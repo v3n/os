@@ -36,14 +36,14 @@ void *Ram::allocate(unsigned long size, bool useMemPool){
 
 	LinkedList *pCurUnit = freeMemBlockLL;
 	freeMemBlockLL = pCurUnit->next;
-	if (NULL != freeMemBlockLL)
+	if (freeMemBlockLL != NULL)
 	{
 		freeMemBlockLL->prev = NULL;
 	}
 
 	pCurUnit->next = allocatedMemBlockLL;
 
-	if (NULL != allocatedMemBlockLL)
+	if (allocatedMemBlockLL != NULL)
 	{
 		allocatedMemBlockLL->prev = pCurUnit;
 	}
@@ -59,14 +59,14 @@ void *Ram::allocate(unsigned long size, int location, PCB process, bool useMemPo
 
 	LinkedList *pCurUnit = freeMemBlockLL;
 	freeMemBlockLL = pCurUnit->next;
-	if (NULL != freeMemBlockLL)
+	if (freeMemBlockLL != NULL)
 	{
 		freeMemBlockLL->prev = NULL;
 	}
 
 	pCurUnit->next = allocatedMemBlockLL;
 
-	if (NULL != allocatedMemBlockLL)
+	if (allocatedMemBlockLL != NULL)
 	{
 		allocatedMemBlockLL->prev = pCurUnit;
 	}
@@ -82,13 +82,13 @@ void Ram::free(void *p){
 		LinkedList *pCurUnit = (LinkedList *)((char *)p - sizeof(LinkedList));
 
 		allocatedMemBlockLL = pCurUnit->next;
-		if (NULL != allocatedMemBlockLL)
+		if (allocatedMemBlockLL != NULL)
 		{
 			allocatedMemBlockLL->prev = NULL;
 		}
 
 		pCurUnit->next = freeMemBlockLL;
-		if (NULL != freeMemBlockLL)
+		if (freeMemBlockLL != NULL)
 		{
 			freeMemBlockLL->prev = pCurUnit;
 		}

@@ -36,7 +36,7 @@ void PageTable::AssignPage(PCB proc_id)
 	proc_id.page_index = free_page;	
 	void *temp;
 	temp = ram->allocate(PAGE_SIZE, free_page, proc_id, true);		//allocate given page?
-	vecPointerToRam.pusback(temp);
+	vecPointerToRam.push_back(temp);
 
 }
 

@@ -31,6 +31,8 @@ void CPU::runloop()
             fetch(state.data + state.program_counter);
             decode();
         }
+
+//        lock.try_lock();
     }
 }
 

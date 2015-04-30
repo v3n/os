@@ -19,21 +19,22 @@ enum CPU_STATE {
 class CPU
 {
 private:
-    /* register memory in hardware, simluating hardware cache */ 
-    CPUState state;
-    unsigned int ReadyState;
-
-    boost::thread thread;
-    boost::mutex mutex;
-    boost::condition_variable cv;
-    boost::unique_lock<boost::mutex> lock;
-
     void idle();
 
     /* boost::thread requires a callable object */
     void runloop();
 
 public:
+    /* register memory in hardware, simluating hardware cache */ 
+    CPUState state;
+    
+    CPU_STATE ReadyState;
+
+    boost::thread thread;
+    boost::mutex mutex;
+    boost::condition_variable cv;
+    boost::unique_lock<boost::mutex> lock;
+
     CPU();
     ~CPU();
 

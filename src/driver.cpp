@@ -110,7 +110,33 @@ int main(int argc, char const ** argv)
     PCB * NextProgram;
     while ( (NextProgram = long_term->Peek()) )
     {
-        long_term->Dequeue();
+        // cout << NextProgram->jobID << endl;
+
+        for ( std::vector<CPU *>::iterator i = cpus.begin(); i != cpus.end() ; i++ )
+        {
+            if ( (*i)->ReadyState == CPU_IDLE )
+            {
+                // if ( (*i)->lock.try_lock() )
+                // {
+                    /* copy cpu state stuff */
+                    File * file = hdd->findFile( NextProgram->jobID - 1 );
+
+                    (*i)->state.data = (WORD *)&(*(file+1));
+
+                    (*i)->ReadyState = CPU_WORKING;
+                    (*i)->cv.notify_all();
+
+                    long_term->Dequeue();
+                // }
+                // else
+                // {
+                //     cout << "Critical error in CPU core state...Exiting." << endl;
+                //     return 1;
+                // }
+                
+                break;
+            }
+        }
     }
 
     /* clean up */

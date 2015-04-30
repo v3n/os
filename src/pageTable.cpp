@@ -45,7 +45,7 @@ void PageTable::FreePage(int page_num, PCB proc_id)
 
 WORD* PageTable::LookupPage(int index, int offset)	//return RAM location based on index/offset of pagetable - need some way to index RAM...
 {
-    return (Word *)&(free_frames->at(rand() % free_frames->size()));
+    return (WORD *)&(free_frames->at(rand() % free_frames->size()));
 }
 
 PCB* PageTable::LookupProcess(int index)		//return process information based on table index
